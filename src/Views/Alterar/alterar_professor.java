@@ -122,6 +122,11 @@ public class alterar_professor extends javax.swing.JFrame {
         jButton3.setBackground(new java.awt.Color(153, 0, 0));
         jButton3.setForeground(new java.awt.Color(255, 255, 255));
         jButton3.setText("Sair");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
         jPanel1.add(jButton3);
         jButton3.setBounds(450, 30, 70, 20);
 
@@ -355,6 +360,11 @@ public class alterar_professor extends javax.swing.JFrame {
     private void id_professorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_id_professorActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_id_professorActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+dispose();
+        new Login().setVisible(true);        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments

@@ -7,7 +7,9 @@ package Views.Cadastrar;
 
 import DAO.Conexao;
 import DAO.DisciplinaDAO;
+import DAO.TurmaDAO;
 import Modelo.Disciplina;
+import Modelo.Turma;
 import Principal.*;
 import java.sql.Connection;
 import javax.swing.JOptionPane;
@@ -16,12 +18,12 @@ import javax.swing.JOptionPane;
  *
  * @author geova
  */
-public class cadastrar_disciplina extends javax.swing.JFrame {
+public class cadastrar_turma extends javax.swing.JFrame {
 
     /**
      * Creates new form TelaAdmin
      */
-    public cadastrar_disciplina() {
+    public cadastrar_turma() {
         initComponents();
     }
 
@@ -40,7 +42,7 @@ public class cadastrar_disciplina extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jLabel11 = new javax.swing.JLabel();
-        nome_disc = new javax.swing.JTextField();
+        serie_turma = new javax.swing.JTextField();
         btn_cad_disc = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -50,7 +52,7 @@ public class cadastrar_disciplina extends javax.swing.JFrame {
 
         jPanel1.setLayout(null);
 
-        jButton1.setBackground(new java.awt.Color(255, 255, 0));
+        jButton1.setBackground(new java.awt.Color(255, 255, 153));
         jButton1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jButton1.setText("Turma");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -61,7 +63,7 @@ public class cadastrar_disciplina extends javax.swing.JFrame {
         jPanel1.add(jButton1);
         jButton1.setBounds(160, 20, 120, 40);
 
-        jButton2.setBackground(new java.awt.Color(255, 255, 153));
+        jButton2.setBackground(new java.awt.Color(255, 255, 0));
         jButton2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jButton2.setText("Disciplina");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -75,6 +77,11 @@ public class cadastrar_disciplina extends javax.swing.JFrame {
         jButton3.setBackground(new java.awt.Color(153, 0, 0));
         jButton3.setForeground(new java.awt.Color(255, 255, 255));
         jButton3.setText("Sair");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
         jPanel1.add(jButton3);
         jButton3.setBounds(450, 30, 70, 20);
 
@@ -91,13 +98,13 @@ public class cadastrar_disciplina extends javax.swing.JFrame {
 
         jLabel11.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(255, 255, 51));
-        jLabel11.setText("Nome da disciplina:");
+        jLabel11.setText("Série:");
         jPanel1.add(jLabel11);
         jLabel11.setBounds(300, 260, 230, 30);
 
-        nome_disc.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jPanel1.add(nome_disc);
-        nome_disc.setBounds(300, 300, 230, 40);
+        serie_turma.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jPanel1.add(serie_turma);
+        serie_turma.setBounds(300, 300, 230, 40);
 
         btn_cad_disc.setBackground(new java.awt.Color(255, 255, 0));
         btn_cad_disc.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -149,27 +156,32 @@ public class cadastrar_disciplina extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void btn_cad_discActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cad_discActionPerformed
-        String nome = nome_disc.getText();
+        String serie = serie_turma.getText();
     
-        if (nome.equals("")) {
+        if (serie.equals("")) {
             JOptionPane.showMessageDialog(null, "Nenhum campo pode estar vazio!", 
                     "Banco de questões", JOptionPane.WARNING_MESSAGE);
         } else {
             Connection con = Conexao.AbrirConexao();
-            DisciplinaDAO sql = new DisciplinaDAO((com.mysql.jdbc.Connection) con);
-            Disciplina a = new Disciplina();
+            TurmaDAO sql = new TurmaDAO((com.mysql.jdbc.Connection) con);
+            Turma a = new Turma();
             
-            a.setNome(nome);
+            a.setSerie(serie);
             
-            sql.Cadastrar_Disciplina(a);
+            sql.Cadastrar_Turma(a);
             Conexao.FecharConexao((com.mysql.jdbc.Connection) con);
 
-            nome_disc.setText("");
+            serie_turma.setText("");
 
-            JOptionPane.showMessageDialog(null, "Disciplina cadastrada com sucesso!",
+            JOptionPane.showMessageDialog(null, "Turma cadastrada com sucesso!",
                     "Banco de questões", JOptionPane.INFORMATION_MESSAGE);            
         }
     }//GEN-LAST:event_btn_cad_discActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+dispose();
+        new Login().setVisible(true);        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -188,14 +200,22 @@ public class cadastrar_disciplina extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(cadastrar_disciplina.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(cadastrar_turma.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(cadastrar_disciplina.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(cadastrar_turma.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(cadastrar_disciplina.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(cadastrar_turma.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(cadastrar_disciplina.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(cadastrar_turma.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -208,7 +228,7 @@ public class cadastrar_disciplina extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new cadastrar_disciplina().setVisible(true);
+                new cadastrar_turma().setVisible(true);
             }
         });
     }
@@ -223,6 +243,6 @@ public class cadastrar_disciplina extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField nome_disc;
+    private javax.swing.JTextField serie_turma;
     // End of variables declaration//GEN-END:variables
 }

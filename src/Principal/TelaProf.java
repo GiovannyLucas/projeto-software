@@ -87,7 +87,6 @@ public class TelaProf extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         btn_Questao = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         btn_Prova = new javax.swing.JButton();
         btn_Assunto = new javax.swing.JButton();
@@ -121,25 +120,13 @@ public class TelaProf extends javax.swing.JFrame {
             }
         });
         jPanel1.add(btn_Questao);
-        btn_Questao.setBounds(120, 20, 90, 40);
-
-        jButton2.setBackground(new java.awt.Color(0, 153, 0));
-        jButton2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(255, 255, 255));
-        jButton2.setText("Gerar Prova");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jButton2);
-        jButton2.setBounds(320, 20, 110, 40);
+        btn_Questao.setBounds(150, 20, 120, 40);
 
         jButton3.setBackground(new java.awt.Color(153, 0, 0));
         jButton3.setForeground(new java.awt.Color(255, 255, 255));
         jButton3.setText("Sair");
         jPanel1.add(jButton3);
-        jButton3.setBounds(460, 30, 70, 20);
+        jButton3.setBounds(450, 30, 70, 20);
 
         btn_Prova.setBackground(new java.awt.Color(0, 153, 0));
         btn_Prova.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -151,7 +138,7 @@ public class TelaProf extends javax.swing.JFrame {
             }
         });
         jPanel1.add(btn_Prova);
-        btn_Prova.setBounds(20, 20, 90, 40);
+        btn_Prova.setBounds(10, 20, 110, 40);
 
         btn_Assunto.setBackground(new java.awt.Color(0, 153, 0));
         btn_Assunto.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -163,7 +150,7 @@ public class TelaProf extends javax.swing.JFrame {
             }
         });
         jPanel1.add(btn_Assunto);
-        btn_Assunto.setBounds(220, 20, 90, 40);
+        btn_Assunto.setBounds(300, 20, 120, 40);
 
         cad_prova.setBackground(new java.awt.Color(0, 153, 0));
         cad_prova.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -320,10 +307,6 @@ public class TelaProf extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
-
     private void btn_ProvaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ProvaActionPerformed
         prova();
     }//GEN-LAST:event_btn_ProvaActionPerformed
@@ -448,7 +431,6 @@ public class TelaProf extends javax.swing.JFrame {
     private javax.swing.JButton exc_assunto;
     private javax.swing.JButton exc_prova;
     private javax.swing.JButton exc_questao;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

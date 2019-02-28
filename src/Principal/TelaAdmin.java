@@ -5,7 +5,9 @@
  */
 package Principal;
 
+import Views.Alterar.*;
 import Views.Cadastrar.*;
+import Views.Consultar.*;
 
 /**
  *
@@ -353,7 +355,7 @@ public class TelaAdmin extends javax.swing.JFrame {
 
     private void cons_discActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cons_discActionPerformed
         dispose();
-        new consultar_disciplina().setVisible(true);
+            new consultar_disciplina().setVisible(true);
     }//GEN-LAST:event_cons_discActionPerformed
 
     private void cad_profActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cad_profActionPerformed

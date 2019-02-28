@@ -2,7 +2,9 @@ package Views.Cadastrar;
 
 import DAO.Conexao;
 import DAO.DisciplinaDAO;
+import DAO.ProfessorDAO;
 import Modelo.Disciplina;
+import Modelo.Professor;
 import Principal.*;
 import java.sql.Connection;
 import java.util.ArrayList;
@@ -57,8 +59,9 @@ public class cadastrar_professor extends javax.swing.JFrame {
         jLabel13 = new javax.swing.JLabel();
         email_prof = new javax.swing.JTextField();
         senha_prof = new javax.swing.JPasswordField();
-        jTF_codigo_disc = new javax.swing.JTextField();
+        jtf_id_disc = new javax.swing.JTextField();
         jCB_disc = new javax.swing.JComboBox<>();
+        jLabel14 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
 
@@ -92,6 +95,11 @@ public class cadastrar_professor extends javax.swing.JFrame {
         jButton3.setBackground(new java.awt.Color(153, 0, 0));
         jButton3.setForeground(new java.awt.Color(255, 255, 255));
         jButton3.setText("Sair");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
         jPanel1.add(jButton3);
         jButton3.setBounds(450, 30, 70, 20);
 
@@ -110,11 +118,11 @@ public class cadastrar_professor extends javax.swing.JFrame {
         jLabel11.setForeground(new java.awt.Color(255, 255, 51));
         jLabel11.setText("Nome:");
         jPanel1.add(jLabel11);
-        jLabel11.setBounds(280, 170, 230, 30);
+        jLabel11.setBounds(280, 160, 230, 30);
 
         nome_prof.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jPanel1.add(nome_prof);
-        nome_prof.setBounds(280, 200, 230, 40);
+        nome_prof.setBounds(280, 190, 230, 40);
 
         btn_cad_prof.setBackground(new java.awt.Color(255, 255, 0));
         btn_cad_prof.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -131,27 +139,27 @@ public class cadastrar_professor extends javax.swing.JFrame {
         jLabel12.setForeground(new java.awt.Color(255, 255, 51));
         jLabel12.setText("E-mail:");
         jPanel1.add(jLabel12);
-        jLabel12.setBounds(280, 250, 230, 30);
+        jLabel12.setBounds(280, 240, 230, 30);
 
         jLabel13.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(255, 255, 51));
         jLabel13.setText("Senha:");
         jPanel1.add(jLabel13);
-        jLabel13.setBounds(280, 330, 230, 30);
+        jLabel13.setBounds(280, 320, 230, 30);
 
         email_prof.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jPanel1.add(email_prof);
-        email_prof.setBounds(280, 280, 230, 40);
+        email_prof.setBounds(280, 270, 230, 40);
         jPanel1.add(senha_prof);
-        senha_prof.setBounds(280, 360, 230, 40);
+        senha_prof.setBounds(280, 350, 230, 40);
 
-        jTF_codigo_disc.addActionListener(new java.awt.event.ActionListener() {
+        jtf_id_disc.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTF_codigo_discActionPerformed(evt);
+                jtf_id_discActionPerformed(evt);
             }
         });
-        jPanel1.add(jTF_codigo_disc);
-        jTF_codigo_disc.setBounds(280, 430, 50, 30);
+        jPanel1.add(jtf_id_disc);
+        jtf_id_disc.setBounds(280, 430, 50, 30);
 
         jCB_disc.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -160,6 +168,12 @@ public class cadastrar_professor extends javax.swing.JFrame {
         });
         jPanel1.add(jCB_disc);
         jCB_disc.setBounds(340, 430, 170, 30);
+
+        jLabel14.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel14.setForeground(new java.awt.Color(255, 255, 51));
+        jLabel14.setText("Matéria:");
+        jPanel1.add(jLabel14);
+        jLabel14.setBounds(280, 400, 230, 30);
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/MenuAdmin.png"))); // NOI18N
         jLabel2.setText("jLabel2");
@@ -201,30 +215,42 @@ public class cadastrar_professor extends javax.swing.JFrame {
 
     private void btn_cad_profActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cad_profActionPerformed
         String nome = nome_prof.getText();
-    
-        if (nome.equals("")) {
+        String email = email_prof.getText();
+        String senha = senha_prof.getText();
+        String id_disc = jtf_id_disc.getText();
+
+        if (nome.equals("") || email.equals("") || senha.equals("") || id_disc.equals("")) {
             JOptionPane.showMessageDialog(null, "Nenhum campo pode estar vazio!", 
                     "Banco de questões", JOptionPane.WARNING_MESSAGE);
         } else {
             Connection con = Conexao.AbrirConexao();
-            DisciplinaDAO sql = new DisciplinaDAO((com.mysql.jdbc.Connection) con);
-            Disciplina a = new Disciplina();
+            ProfessorDAO sql = new ProfessorDAO((com.mysql.jdbc.Connection) con);
+            Professor a = new Professor();
             
-            a.setNome(nome);
+            int id_d = Integer.parseInt(id_disc);
             
-            sql.Cadastrar_Disciplina(a);
+            a.setNome(nome);;
+            a.setEmail(email);
+            a.setSenha(senha);
+            a.setId_disc(id_d);
+
+            sql.Cadastrar_Professor(a);
             Conexao.FecharConexao((com.mysql.jdbc.Connection) con);
 
             nome_prof.setText("");
+            email_prof.setText("");
+            senha_prof.setText("");
+            jtf_id_disc.setText("");
+            jCB_disc.setSelectedIndex(0);
 
-            JOptionPane.showMessageDialog(null, "Disciplina cadastrada com sucesso!",
+            JOptionPane.showMessageDialog(null, "Professor cadastrado com sucesso!",
                     "Banco de questões", JOptionPane.INFORMATION_MESSAGE);            
         }
     }//GEN-LAST:event_btn_cad_profActionPerformed
 
-    private void jTF_codigo_discActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTF_codigo_discActionPerformed
+    private void jtf_id_discActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_id_discActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTF_codigo_discActionPerformed
+    }//GEN-LAST:event_jtf_id_discActionPerformed
 
     private void jCB_discActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCB_discActionPerformed
         Connection con = Conexao.AbrirConexao();
@@ -236,10 +262,15 @@ public class cadastrar_professor extends javax.swing.JFrame {
 
         for (Disciplina b : lista) {
             int a = b.getId();
-            jTF_codigo_disc.setText("" + a);
+            jtf_id_disc.setText("" + a);
         }
         Conexao.FecharConexao((com.mysql.jdbc.Connection) con);
     }//GEN-LAST:event_jCB_discActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+dispose();
+        new Login().setVisible(true);        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -302,10 +333,11 @@ public class cadastrar_professor extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField jTF_codigo_disc;
+    private javax.swing.JTextField jtf_id_disc;
     private javax.swing.JTextField nome_prof;
     private javax.swing.JPasswordField senha_prof;
     // End of variables declaration//GEN-END:variables
