@@ -42,19 +42,22 @@ public class QuestaoDAO extends ExecuteSQL{
         }
     }
     
-    public List<Professor> Pegar_Professor(int id){
-        String sql = "SELECT * FROM professor WHERE id = "+ id + "";
-        List<Professor> lista = new ArrayList<>();
+    public List<Questao> Pegar_Questao(int id){
+        String sql = "SELECT id, enunciado, alt1, alt2, alt3, alt4, gab FROM questoes WHERE id = '"+ id + "'";
+        List<Questao> lista = new ArrayList<>();
         try {
             PreparedStatement ps = getCon().prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             if (rs != null) {
                 while (rs.next()) {                    
-                    Professor a = new Professor();
+                    Questao a = new Questao();
                     a.setId(rs.getInt(1));
-                    a.setNome(rs.getString(2));
-                    a.setEmail(rs.getString(3));
-                    a.setSenha(rs.getString(4));
+                    a.setEnun(rs.getString(2));
+                    a.setAlt1(rs.getString(3));
+                    a.setAlt2(rs.getString(4));
+                    a.setAlt3(rs.getString(5));
+                    a.setAlt4(rs.getString(6));
+                    a.setGab(rs.getString(7));
                     
                     lista.add(a);
                 }
@@ -67,17 +70,20 @@ public class QuestaoDAO extends ExecuteSQL{
         }
     }
     
-    public String Alterar_Professor(Professor a){
-        String sql = "UPDATE professor SET nome = ?, email = ?, senha = ?, id_disc = ? WHERE id = ?";
+    public String Alterar_Questao(Questao a){
+        String sql = "UPDATE questoes SET enunciado = ?, alt1 = ?, alt2 = ?, alt3 = ?,"
+                + " alt4 = ?, gab = ? WHERE id = ?";
         
         try {
             PreparedStatement ps = getCon().prepareStatement(sql);
             
-            ps.setString(1, a.getNome());
-            ps.setString(2, a.getEmail());
-            ps.setString(3, a.getSenha());
-            ps.setInt(4, a.getId_disc());
-            ps.setInt(5, a.getId());
+            ps.setString(1, a.getEnun());
+            ps.setString(2, a.getAlt1());
+            ps.setString(3, a.getAlt2());
+            ps.setString(4, a.getAlt3());
+            ps.setString(5, a.getAlt4());
+            ps.setString(6, a.getGab());
+            ps.setInt(7, a.getId());
             
             if (ps.executeUpdate() > 0) {
                 return "Atualizado com sucesso!";

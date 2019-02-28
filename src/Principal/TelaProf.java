@@ -5,6 +5,9 @@
  */
 package Principal;
 
+import Views.Alterar.alterar_questao;
+import Views.Cadastrar.*;
+
 /**
  *
  * @author geova
@@ -91,7 +94,6 @@ public class TelaProf extends javax.swing.JFrame {
         btn_Prova = new javax.swing.JButton();
         btn_Assunto = new javax.swing.JButton();
         cad_prova = new javax.swing.JButton();
-        alt_prova = new javax.swing.JButton();
         cons_prova = new javax.swing.JButton();
         exc_prova = new javax.swing.JButton();
         cad_questao = new javax.swing.JButton();
@@ -166,18 +168,7 @@ public class TelaProf extends javax.swing.JFrame {
             }
         });
         jPanel1.add(cad_prova);
-        cad_prova.setBounds(120, 210, 210, 100);
-
-        alt_prova.setBackground(new java.awt.Color(0, 153, 0));
-        alt_prova.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        alt_prova.setText("Alterar Prova");
-        alt_prova.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                alt_provaActionPerformed(evt);
-            }
-        });
-        jPanel1.add(alt_prova);
-        alt_prova.setBounds(460, 210, 210, 100);
+        cad_prova.setBounds(300, 210, 210, 100);
 
         cons_prova.setBackground(new java.awt.Color(0, 153, 0));
         cons_prova.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -325,11 +316,6 @@ public class TelaProf extends javax.swing.JFrame {
         new cadastrar_prova().setVisible(true);
     }//GEN-LAST:event_cad_provaActionPerformed
 
-    private void alt_provaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_alt_provaActionPerformed
-        dispose();
-        new alterar_prova().setVisible(true);
-    }//GEN-LAST:event_alt_provaActionPerformed
-
     private void cons_provaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cons_provaActionPerformed
         dispose();
         new consultar_prova().setVisible(true);
@@ -352,7 +338,7 @@ public class TelaProf extends javax.swing.JFrame {
 
     private void cons_questaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cons_questaoActionPerformed
         dispose();
-        new consultar_questao().setVisible(true);
+        new alterar_questao().setVisible(true);
     }//GEN-LAST:event_cons_questaoActionPerformed
 
     private void exc_questaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exc_questaoActionPerformed
@@ -427,7 +413,6 @@ new Login().setVisible(true);
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton alt_assunto;
-    private javax.swing.JButton alt_prova;
     private javax.swing.JButton alt_questao;
     private javax.swing.JButton btn_Assunto;
     private javax.swing.JButton btn_Prova;

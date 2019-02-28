@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Views.Cadastrar;
+package Views.Alterar;
 
+import Views.Cadastrar.*;
 import DAO.AssuntoDAO;
 import DAO.Conexao;
 import DAO.DisciplinaDAO;
@@ -22,18 +23,31 @@ import javax.swing.JOptionPane;
  *
  * @author geova
  */
-public class cadastrar_questao extends javax.swing.JFrame {
+public class alterar_assunto extends javax.swing.JFrame {
 
     /**
      * Creates new form TelaAdmin
      */
-    public cadastrar_questao() {
+    public alterar_assunto() {
         initComponents();
-        AtualizaComboDisc();
-        AtualizaComboAssu();
+        AtualizaCombo();
     }
-
-    private void AtualizaComboDisc(){
+    
+    private void InserirDados(int id){
+        Connection con = Conexao.AbrirConexao();
+        AssuntoDAO sql = new AssuntoDAO((com.mysql.jdbc.Connection) con);
+        List<Assunto> lista = new ArrayList<>();
+        lista = sql.Pegar_Assunto(id);
+        
+        for (Assunto a : lista) {
+            id_assu.setText("" + a.getId());
+            nome_assu.setText("" + a.getNome());
+        }
+        
+        Conexao.FecharConexao((com.mysql.jdbc.Connection) con);
+    }
+    
+    private void AtualizaCombo(){
         Connection con = Conexao.AbrirConexao();
         DisciplinaDAO sql = new DisciplinaDAO((com.mysql.jdbc.Connection) con);
         List<Disciplina> lista = new ArrayList<>();
@@ -45,20 +59,6 @@ public class cadastrar_questao extends javax.swing.JFrame {
         }
         Conexao.FecharConexao((com.mysql.jdbc.Connection) con);
     }
-    
-    private void AtualizaComboAssu(){
-        Connection con = Conexao.AbrirConexao();
-        AssuntoDAO sql = new AssuntoDAO((com.mysql.jdbc.Connection) con);
-        List<Assunto> lista = new ArrayList<>();
-        lista = sql.ListarComboAssunto();
-        jCB_assunto.addItem("");
-        
-        for (Assunto b : lista) {
-            jCB_assunto.addItem(b.getNome());
-        }
-        Conexao.FecharConexao((com.mysql.jdbc.Connection) con);
-    }
-    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -71,6 +71,7 @@ public class cadastrar_questao extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jButton3 = new javax.swing.JButton();
         jLabel11 = new javax.swing.JLabel();
+        nome_assu = new javax.swing.JTextField();
         btn_cad_disc = new javax.swing.JButton();
         btn_Prova = new javax.swing.JButton();
         btn_Questao = new javax.swing.JButton();
@@ -78,25 +79,11 @@ public class cadastrar_questao extends javax.swing.JFrame {
         jCB_disc = new javax.swing.JComboBox<>();
         jtf_id_disc = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        alta = new javax.swing.JTextArea();
+        id_assunto = new javax.swing.JTextField();
+        jLabel16 = new javax.swing.JLabel();
+        btn_pesq_disci = new javax.swing.JButton();
+        id_assu = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        enunciado = new javax.swing.JTextArea();
-        jLabel14 = new javax.swing.JLabel();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        altb = new javax.swing.JTextArea();
-        jLabel15 = new javax.swing.JLabel();
-        jScrollPane4 = new javax.swing.JScrollPane();
-        altc = new javax.swing.JTextArea();
-        AaDS = new javax.swing.JLabel();
-        jScrollPane5 = new javax.swing.JScrollPane();
-        altd = new javax.swing.JTextArea();
-        jCB_gab = new javax.swing.JComboBox<>();
-        jCB_assunto = new javax.swing.JComboBox<>();
-        jtf_id_assunto = new javax.swing.JTextField();
-        jLabel17 = new javax.swing.JLabel();
-        jLabel18 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
 
@@ -120,18 +107,22 @@ public class cadastrar_questao extends javax.swing.JFrame {
         jLabel11.setForeground(new java.awt.Color(0, 153, 0));
         jLabel11.setText("Disciplina:");
         jPanel1.add(jLabel11);
-        jLabel11.setBounds(490, 180, 230, 30);
+        jLabel11.setBounds(300, 400, 230, 30);
+
+        nome_assu.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jPanel1.add(nome_assu);
+        nome_assu.setBounds(300, 350, 230, 40);
 
         btn_cad_disc.setBackground(new java.awt.Color(0, 153, 0));
         btn_cad_disc.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        btn_cad_disc.setText("Cadastrar");
+        btn_cad_disc.setText("Alterar");
         btn_cad_disc.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_cad_discActionPerformed(evt);
             }
         });
         jPanel1.add(btn_cad_disc);
-        btn_cad_disc.setBounds(550, 480, 130, 50);
+        btn_cad_disc.setBounds(400, 490, 130, 50);
 
         btn_Prova.setBackground(new java.awt.Color(0, 153, 0));
         btn_Prova.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -145,7 +136,7 @@ public class cadastrar_questao extends javax.swing.JFrame {
         jPanel1.add(btn_Prova);
         btn_Prova.setBounds(10, 20, 110, 40);
 
-        btn_Questao.setBackground(new java.awt.Color(0, 204, 51));
+        btn_Questao.setBackground(new java.awt.Color(0, 153, 0));
         btn_Questao.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btn_Questao.setForeground(new java.awt.Color(255, 255, 255));
         btn_Questao.setText("Questão");
@@ -157,7 +148,7 @@ public class cadastrar_questao extends javax.swing.JFrame {
         jPanel1.add(btn_Questao);
         btn_Questao.setBounds(150, 20, 120, 40);
 
-        btn_Assunto.setBackground(new java.awt.Color(0, 153, 0));
+        btn_Assunto.setBackground(new java.awt.Color(0, 204, 51));
         btn_Assunto.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btn_Assunto.setForeground(new java.awt.Color(255, 255, 255));
         btn_Assunto.setText("Assunto");
@@ -175,7 +166,7 @@ public class cadastrar_questao extends javax.swing.JFrame {
             }
         });
         jPanel1.add(jCB_disc);
-        jCB_disc.setBounds(490, 220, 230, 40);
+        jCB_disc.setBounds(300, 430, 230, 40);
 
         jtf_id_disc.setEditable(false);
         jtf_id_disc.addActionListener(new java.awt.event.ActionListener() {
@@ -184,112 +175,43 @@ public class cadastrar_questao extends javax.swing.JFrame {
             }
         });
         jPanel1.add(jtf_id_disc);
-        jtf_id_disc.setBounds(490, 220, 50, 40);
+        jtf_id_disc.setBounds(300, 430, 50, 40);
 
         jLabel12.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(0, 153, 0));
-        jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel12.setText("Enunciado:");
+        jLabel12.setText("Nome do assunto:");
         jPanel1.add(jLabel12);
-        jLabel12.setBounds(70, 140, 380, 30);
+        jLabel12.setBounds(300, 320, 230, 30);
+        jPanel1.add(id_assunto);
+        id_assunto.setBounds(300, 180, 120, 40);
 
-        alta.setColumns(20);
-        alta.setRows(5);
-        jScrollPane2.setViewportView(alta);
+        jLabel16.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel16.setForeground(new java.awt.Color(0, 153, 0));
+        jLabel16.setText("Digite o código da questão:");
+        jPanel1.add(jLabel16);
+        jLabel16.setBounds(300, 150, 200, 30);
 
-        jPanel1.add(jScrollPane2);
-        jScrollPane2.setBounds(50, 280, 420, 50);
+        btn_pesq_disci.setBackground(new java.awt.Color(0, 153, 0));
+        btn_pesq_disci.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        btn_pesq_disci.setText("Pesquisar");
+        btn_pesq_disci.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_pesq_disciActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btn_pesq_disci);
+        btn_pesq_disci.setBounds(430, 180, 90, 40);
+
+        id_assu.setEditable(false);
+        id_assu.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jPanel1.add(id_assu);
+        id_assu.setBounds(300, 270, 230, 40);
 
         jLabel13.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(0, 153, 0));
-        jLabel13.setText("Item A:");
+        jLabel13.setText("Código:");
         jPanel1.add(jLabel13);
-        jLabel13.setBounds(50, 250, 230, 40);
-
-        enunciado.setColumns(20);
-        enunciado.setRows(5);
-        jScrollPane1.setViewportView(enunciado);
-
-        jPanel1.add(jScrollPane1);
-        jScrollPane1.setBounds(50, 170, 420, 90);
-
-        jLabel14.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel14.setForeground(new java.awt.Color(0, 153, 0));
-        jLabel14.setText("Item B:");
-        jPanel1.add(jLabel14);
-        jLabel14.setBounds(50, 320, 230, 40);
-
-        altb.setColumns(20);
-        altb.setRows(5);
-        jScrollPane3.setViewportView(altb);
-
-        jPanel1.add(jScrollPane3);
-        jScrollPane3.setBounds(50, 350, 420, 50);
-
-        jLabel15.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel15.setForeground(new java.awt.Color(0, 153, 0));
-        jLabel15.setText("Item C:");
-        jPanel1.add(jLabel15);
-        jLabel15.setBounds(50, 390, 230, 40);
-
-        altc.setColumns(20);
-        altc.setRows(5);
-        jScrollPane4.setViewportView(altc);
-
-        jPanel1.add(jScrollPane4);
-        jScrollPane4.setBounds(50, 420, 420, 50);
-
-        AaDS.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        AaDS.setForeground(new java.awt.Color(0, 153, 0));
-        AaDS.setText("Item D:");
-        jPanel1.add(AaDS);
-        AaDS.setBounds(50, 460, 230, 40);
-
-        altd.setColumns(20);
-        altd.setRows(5);
-        jScrollPane5.setViewportView(altd);
-
-        jPanel1.add(jScrollPane5);
-        jScrollPane5.setBounds(50, 490, 420, 50);
-
-        jCB_gab.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "A", "B", "C", "D" }));
-        jCB_gab.setSelectedIndex(-1);
-        jCB_gab.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCB_gabActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jCB_gab);
-        jCB_gab.setBounds(490, 410, 230, 40);
-
-        jCB_assunto.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCB_assuntoActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jCB_assunto);
-        jCB_assunto.setBounds(490, 310, 230, 40);
-
-        jtf_id_assunto.setEditable(false);
-        jtf_id_assunto.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtf_id_assuntoActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jtf_id_assunto);
-        jtf_id_assunto.setBounds(490, 310, 50, 40);
-
-        jLabel17.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel17.setForeground(new java.awt.Color(0, 153, 0));
-        jLabel17.setText("Assunto:");
-        jPanel1.add(jLabel17);
-        jLabel17.setBounds(490, 280, 230, 30);
-
-        jLabel18.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel18.setForeground(new java.awt.Color(0, 153, 0));
-        jLabel18.setText("Gabarito(item):");
-        jPanel1.add(jLabel18);
-        jLabel18.setBounds(490, 380, 230, 30);
+        jLabel13.setBounds(300, 240, 230, 30);
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Menu.png"))); // NOI18N
         jPanel1.add(jLabel2);
@@ -314,55 +236,32 @@ public class cadastrar_questao extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_cad_discActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cad_discActionPerformed
-        String id_disc = jtf_id_disc.getText();
-        String id_assu = jtf_id_assunto.getText();
-        String enunc = enunciado.getText();
-        String alt1 = alta.getText();
-        String alt2 = altb.getText();
-        String alt3 = altc.getText();
-        String alt4 = altd.getText();
-        String gab = jCB_gab.getSelectedItem().toString();
-
-        
-        if (id_disc.equals("") || id_assu.equals("") || enunc.equals("") || alt1.equals("") || alt2.equals("")
-            || alt3.equals("") || alt4.equals("") || gab.equals("")) {
-            JOptionPane.showMessageDialog(null, "Nenhum campo pode estar vazio!", 
+    String codigo = id_assu.getText();
+    String nome = nome_assu.getText();
+    String disc = jtf_id_disc.getText();
+    
+    if (codigo.equals("") || nome.equals("") || disc.equals("")) {
+        JOptionPane.showMessageDialog(null, "Nenhum campo pode estar vazio!",
                     "Banco de questões", JOptionPane.WARNING_MESSAGE);
-        } else {
-            Connection con = Conexao.AbrirConexao();
-            QuestaoDAO sql = new QuestaoDAO((com.mysql.jdbc.Connection) con);
-            Questao a = new Questao();
-            int id_d = Integer.parseInt(id_disc);
-            int id_a = Integer.parseInt(id_assu);
-
-            a.setId_disc(id_d);
-            a.setId_assu(id_a);
-            a.setEnun(enunc);
-            a.setAlt1(alt1);
-            a.setAlt2(alt2);
-            a.setAlt3(alt3);
-            a.setAlt4(alt4);
-            a.setGab(gab);
-            
-            sql.Cadastrar_Questao(a);
-            Conexao.FecharConexao((com.mysql.jdbc.Connection) con);
-
-            enunciado.setText("");
-            alta.setText("");
-            altb.setText("");
-            altc.setText("");
-            altd.setText("");
-            jtf_id_disc.setText("");
-            jtf_id_assunto.setText("");
-            jCB_disc.setSelectedIndex(0);
-            jCB_assunto.setSelectedIndex(0);
-            jCB_gab.setSelectedIndex(-1);
-
-            JOptionPane.showMessageDialog(null, "Questão cadastrada com sucesso!",
-                    "Banco de questões", JOptionPane.INFORMATION_MESSAGE); 
-            dispose();
-            new cadastrar_questao().setVisible(true);
-        }
+    } else {
+        Connection con = Conexao.AbrirConexao();
+        AssuntoDAO sql = new AssuntoDAO((com.mysql.jdbc.Connection) con);
+        int cod = Integer.parseInt(codigo);
+        int di = Integer.parseInt(disc);
+        Assunto a = new Assunto();
+        
+        a.setNome(nome);
+        a.setId_disc(di);
+        a.setId(cod);
+        
+        sql.Alterar_Assunto(a);
+        Conexao.FecharConexao((com.mysql.jdbc.Connection) con);
+        
+        JOptionPane.showMessageDialog(null, "Assunto alterado com sucesso!",
+                    "Banco de questões", JOptionPane.INFORMATION_MESSAGE);   
+        dispose();
+        new alterar_assunto().setVisible(true);
+    }
     }//GEN-LAST:event_btn_cad_discActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -402,32 +301,22 @@ dispose();
             jtf_id_disc.setText("" + a);
         }
         Conexao.FecharConexao((com.mysql.jdbc.Connection) con);
-        
-        
     }//GEN-LAST:event_jCB_discActionPerformed
 
-    private void jtf_id_assuntoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_id_assuntoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_id_assuntoActionPerformed
-
-    private void jCB_assuntoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCB_assuntoActionPerformed
-        Connection con = Conexao.AbrirConexao();
+    private void btn_pesq_disciActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_pesq_disciActionPerformed
+        String id = id_assunto.getText();
+        Connection con  = Conexao.AbrirConexao();
         AssuntoDAO sql = new AssuntoDAO((com.mysql.jdbc.Connection) con);
-        List<Assunto> lista = new ArrayList<>();
-        String nome = jCB_assunto.getSelectedItem().toString();
+        int cod = Integer.parseInt(id);
 
-        lista = sql.ConsultaCodigoAssunto(nome);
-
-        for (Assunto b : lista) {
-            int a = b.getId();
-            jtf_id_assunto.setText("" + a);
+        if (id.equals("")) {
+            JOptionPane.showMessageDialog(null, "Digite um código para atualizar",
+                "Banco de questões", JOptionPane.WARNING_MESSAGE);
         }
-        Conexao.FecharConexao((com.mysql.jdbc.Connection) con);
-    }//GEN-LAST:event_jCB_assuntoActionPerformed
 
-    private void jCB_gabActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCB_gabActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jCB_gabActionPerformed
+        InserirDados(cod);
+        id_assunto.setText("");
+    }//GEN-LAST:event_btn_pesq_disciActionPerformed
 
     /**
      * @param args the command line arguments
@@ -446,13 +335,13 @@ dispose();
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(cadastrar_questao.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(alterar_assunto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(cadastrar_questao.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(alterar_assunto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(cadastrar_questao.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(alterar_assunto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(cadastrar_questao.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(alterar_assunto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
@@ -522,42 +411,29 @@ dispose();
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new cadastrar_questao().setVisible(true);
+                new alterar_assunto().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel AaDS;
-    private javax.swing.JTextArea alta;
-    private javax.swing.JTextArea altb;
-    private javax.swing.JTextArea altc;
-    private javax.swing.JTextArea altd;
     private javax.swing.JButton btn_Assunto;
     private javax.swing.JButton btn_Prova;
     private javax.swing.JButton btn_Questao;
     private javax.swing.JButton btn_cad_disc;
-    private javax.swing.JTextArea enunciado;
+    private javax.swing.JButton btn_pesq_disci;
+    private javax.swing.JTextField id_assu;
+    private javax.swing.JTextField id_assunto;
     private javax.swing.JButton jButton3;
-    private javax.swing.JComboBox<String> jCB_assunto;
     private javax.swing.JComboBox<String> jCB_disc;
-    private javax.swing.JComboBox<String> jCB_gab;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JScrollPane jScrollPane5;
-    private javax.swing.JTextField jtf_id_assunto;
     private javax.swing.JTextField jtf_id_disc;
+    private javax.swing.JTextField nome_assu;
     // End of variables declaration//GEN-END:variables
 }

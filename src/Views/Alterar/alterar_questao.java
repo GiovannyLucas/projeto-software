@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Views.Cadastrar;
+package Views.Alterar;
 
 import DAO.AssuntoDAO;
 import DAO.Conexao;
@@ -22,40 +22,31 @@ import javax.swing.JOptionPane;
  *
  * @author geova
  */
-public class cadastrar_questao extends javax.swing.JFrame {
+public class alterar_questao extends javax.swing.JFrame {
 
     /**
      * Creates new form TelaAdmin
      */
-    public cadastrar_questao() {
+    public alterar_questao() {
         initComponents();
-        AtualizaComboDisc();
-        AtualizaComboAssu();
     }
 
-    private void AtualizaComboDisc(){
+    private void InserirDados(int id){
         Connection con = Conexao.AbrirConexao();
-        DisciplinaDAO sql = new DisciplinaDAO((com.mysql.jdbc.Connection) con);
-        List<Disciplina> lista = new ArrayList<>();
-        lista = sql.ListarComboDisciplina();
-        jCB_disc.addItem("");
+        QuestaoDAO sql = new QuestaoDAO((com.mysql.jdbc.Connection) con);
+        List<Questao> lista = new ArrayList<>();
+        lista = sql.Pegar_Questao(id);
         
-        for (Disciplina b : lista) {
-            jCB_disc.addItem(b.getNome());
+        for (Questao a : lista) {
+            id_q.setText("" + a.getId());
+            enunciado.setText("" + a.getEnun());
+            alta.setText("" + a.getAlt1());
+            altb.setText("" + a.getAlt2());
+            altc.setText("" + a.getAlt3());
+            altd.setText("" + a.getAlt4());
+            gaba.setText("" + a.getGab());
         }
-        Conexao.FecharConexao((com.mysql.jdbc.Connection) con);
-    }
-    
-    private void AtualizaComboAssu(){
-        Connection con = Conexao.AbrirConexao();
-        AssuntoDAO sql = new AssuntoDAO((com.mysql.jdbc.Connection) con);
-        List<Assunto> lista = new ArrayList<>();
-        lista = sql.ListarComboAssunto();
-        jCB_assunto.addItem("");
         
-        for (Assunto b : lista) {
-            jCB_assunto.addItem(b.getNome());
-        }
         Conexao.FecharConexao((com.mysql.jdbc.Connection) con);
     }
     
@@ -70,13 +61,10 @@ public class cadastrar_questao extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jButton3 = new javax.swing.JButton();
-        jLabel11 = new javax.swing.JLabel();
-        btn_cad_disc = new javax.swing.JButton();
+        btn_alt_q = new javax.swing.JButton();
         btn_Prova = new javax.swing.JButton();
         btn_Questao = new javax.swing.JButton();
         btn_Assunto = new javax.swing.JButton();
-        jCB_disc = new javax.swing.JComboBox<>();
-        jtf_id_disc = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         alta = new javax.swing.JTextArea();
@@ -93,10 +81,14 @@ public class cadastrar_questao extends javax.swing.JFrame {
         jScrollPane5 = new javax.swing.JScrollPane();
         altd = new javax.swing.JTextArea();
         jCB_gab = new javax.swing.JComboBox<>();
-        jCB_assunto = new javax.swing.JComboBox<>();
-        jtf_id_assunto = new javax.swing.JTextField();
-        jLabel17 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
+        btn_pesq_disci = new javax.swing.JButton();
+        jLabel16 = new javax.swing.JLabel();
+        id_questao = new javax.swing.JTextField();
+        jLabel17 = new javax.swing.JLabel();
+        id_q = new javax.swing.JTextField();
+        gaba = new javax.swing.JTextField();
+        jLabel19 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
 
@@ -116,22 +108,16 @@ public class cadastrar_questao extends javax.swing.JFrame {
         jPanel1.add(jButton3);
         jButton3.setBounds(450, 30, 70, 20);
 
-        jLabel11.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel11.setForeground(new java.awt.Color(0, 153, 0));
-        jLabel11.setText("Disciplina:");
-        jPanel1.add(jLabel11);
-        jLabel11.setBounds(490, 180, 230, 30);
-
-        btn_cad_disc.setBackground(new java.awt.Color(0, 153, 0));
-        btn_cad_disc.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        btn_cad_disc.setText("Cadastrar");
-        btn_cad_disc.addActionListener(new java.awt.event.ActionListener() {
+        btn_alt_q.setBackground(new java.awt.Color(0, 153, 0));
+        btn_alt_q.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        btn_alt_q.setText("Alterar");
+        btn_alt_q.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_cad_discActionPerformed(evt);
+                btn_alt_qActionPerformed(evt);
             }
         });
-        jPanel1.add(btn_cad_disc);
-        btn_cad_disc.setBounds(550, 480, 130, 50);
+        jPanel1.add(btn_alt_q);
+        btn_alt_q.setBounds(540, 480, 160, 60);
 
         btn_Prova.setBackground(new java.awt.Color(0, 153, 0));
         btn_Prova.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -168,23 +154,6 @@ public class cadastrar_questao extends javax.swing.JFrame {
         });
         jPanel1.add(btn_Assunto);
         btn_Assunto.setBounds(300, 20, 120, 40);
-
-        jCB_disc.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCB_discActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jCB_disc);
-        jCB_disc.setBounds(490, 220, 230, 40);
-
-        jtf_id_disc.setEditable(false);
-        jtf_id_disc.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtf_id_discActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jtf_id_disc);
-        jtf_id_disc.setBounds(490, 220, 50, 40);
 
         jLabel12.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(0, 153, 0));
@@ -260,36 +229,62 @@ public class cadastrar_questao extends javax.swing.JFrame {
             }
         });
         jPanel1.add(jCB_gab);
-        jCB_gab.setBounds(490, 410, 230, 40);
-
-        jCB_assunto.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCB_assuntoActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jCB_assunto);
-        jCB_assunto.setBounds(490, 310, 230, 40);
-
-        jtf_id_assunto.setEditable(false);
-        jtf_id_assunto.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtf_id_assuntoActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jtf_id_assunto);
-        jtf_id_assunto.setBounds(490, 310, 50, 40);
-
-        jLabel17.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel17.setForeground(new java.awt.Color(0, 153, 0));
-        jLabel17.setText("Assunto:");
-        jPanel1.add(jLabel17);
-        jLabel17.setBounds(490, 280, 230, 30);
+        jCB_gab.setBounds(500, 420, 230, 40);
 
         jLabel18.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel18.setForeground(new java.awt.Color(0, 153, 0));
         jLabel18.setText("Gabarito(item):");
         jPanel1.add(jLabel18);
-        jLabel18.setBounds(490, 380, 230, 30);
+        jLabel18.setBounds(500, 390, 230, 30);
+
+        btn_pesq_disci.setBackground(new java.awt.Color(0, 153, 0));
+        btn_pesq_disci.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        btn_pesq_disci.setText("Pesquisar");
+        btn_pesq_disci.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_pesq_disciActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btn_pesq_disci);
+        btn_pesq_disci.setBounds(630, 180, 90, 40);
+
+        jLabel16.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel16.setForeground(new java.awt.Color(0, 153, 0));
+        jLabel16.setText("Digite o código da questão:");
+        jPanel1.add(jLabel16);
+        jLabel16.setBounds(500, 150, 200, 30);
+        jPanel1.add(id_questao);
+        id_questao.setBounds(500, 180, 120, 40);
+
+        jLabel17.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel17.setForeground(new java.awt.Color(0, 153, 0));
+        jLabel17.setText("Código:");
+        jPanel1.add(jLabel17);
+        jLabel17.setBounds(500, 240, 220, 30);
+
+        id_q.setEditable(false);
+        id_q.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                id_qActionPerformed(evt);
+            }
+        });
+        jPanel1.add(id_q);
+        id_q.setBounds(500, 270, 220, 40);
+
+        gaba.setEditable(false);
+        gaba.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                gabaActionPerformed(evt);
+            }
+        });
+        jPanel1.add(gaba);
+        gaba.setBounds(500, 350, 220, 40);
+
+        jLabel19.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel19.setForeground(new java.awt.Color(0, 153, 0));
+        jLabel19.setText("Gabarito:");
+        jPanel1.add(jLabel19);
+        jLabel19.setBounds(500, 320, 220, 30);
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Menu.png"))); // NOI18N
         jPanel1.add(jLabel2);
@@ -313,57 +308,42 @@ public class cadastrar_questao extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btn_cad_discActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cad_discActionPerformed
-        String id_disc = jtf_id_disc.getText();
-        String id_assu = jtf_id_assunto.getText();
-        String enunc = enunciado.getText();
-        String alt1 = alta.getText();
-        String alt2 = altb.getText();
-        String alt3 = altc.getText();
-        String alt4 = altd.getText();
-        String gab = jCB_gab.getSelectedItem().toString();
-
-        
-        if (id_disc.equals("") || id_assu.equals("") || enunc.equals("") || alt1.equals("") || alt2.equals("")
-            || alt3.equals("") || alt4.equals("") || gab.equals("")) {
-            JOptionPane.showMessageDialog(null, "Nenhum campo pode estar vazio!", 
+    private void btn_alt_qActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_alt_qActionPerformed
+    String codigo = id_q.getText();
+    String enunci = enunciado.getText();
+    String alt1 = alta.getText();
+    String alt2 = altb.getText();
+    String alt3 = altc.getText();
+    String alt4 = altd.getText();
+    String gab = jCB_gab.getSelectedItem().toString();
+    
+    if (codigo.equals("") || enunci.equals("") || alt1.equals("") || alt2.equals("") ||
+        alt3.equals("") || alt4.equals("") || gab.equals("")) {
+        JOptionPane.showMessageDialog(null, "Nenhum campo pode estar vazio!",
                     "Banco de questões", JOptionPane.WARNING_MESSAGE);
-        } else {
-            Connection con = Conexao.AbrirConexao();
-            QuestaoDAO sql = new QuestaoDAO((com.mysql.jdbc.Connection) con);
-            Questao a = new Questao();
-            int id_d = Integer.parseInt(id_disc);
-            int id_a = Integer.parseInt(id_assu);
-
-            a.setId_disc(id_d);
-            a.setId_assu(id_a);
-            a.setEnun(enunc);
-            a.setAlt1(alt1);
-            a.setAlt2(alt2);
-            a.setAlt3(alt3);
-            a.setAlt4(alt4);
-            a.setGab(gab);
-            
-            sql.Cadastrar_Questao(a);
-            Conexao.FecharConexao((com.mysql.jdbc.Connection) con);
-
-            enunciado.setText("");
-            alta.setText("");
-            altb.setText("");
-            altc.setText("");
-            altd.setText("");
-            jtf_id_disc.setText("");
-            jtf_id_assunto.setText("");
-            jCB_disc.setSelectedIndex(0);
-            jCB_assunto.setSelectedIndex(0);
-            jCB_gab.setSelectedIndex(-1);
-
-            JOptionPane.showMessageDialog(null, "Questão cadastrada com sucesso!",
-                    "Banco de questões", JOptionPane.INFORMATION_MESSAGE); 
-            dispose();
-            new cadastrar_questao().setVisible(true);
-        }
-    }//GEN-LAST:event_btn_cad_discActionPerformed
+    } else {
+        Connection con = Conexao.AbrirConexao();
+        QuestaoDAO sql = new QuestaoDAO((com.mysql.jdbc.Connection) con);
+        int cod = Integer.parseInt(codigo);
+        Questao a = new Questao();
+        
+        a.setEnun(enunci);
+        a.setAlt1(alt1);
+        a.setAlt2(alt2);
+        a.setAlt3(alt3);
+        a.setAlt4(alt4);
+        a.setGab(gab);
+        a.setId(cod);
+        
+        sql.Alterar_Questao(a);
+        Conexao.FecharConexao((com.mysql.jdbc.Connection) con);
+        
+        JOptionPane.showMessageDialog(null, "Questão alterada com sucesso!",
+                    "Banco de questões", JOptionPane.INFORMATION_MESSAGE);   
+        dispose();
+        new alterar_questao().setVisible(true);
+    }
+    }//GEN-LAST:event_btn_alt_qActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
 dispose();
@@ -385,49 +365,33 @@ dispose();
         new TelaProf().setVisible(true);
     }//GEN-LAST:event_btn_AssuntoActionPerformed
 
-    private void jtf_id_discActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_id_discActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_id_discActionPerformed
-
-    private void jCB_discActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCB_discActionPerformed
-        Connection con = Conexao.AbrirConexao();
-        DisciplinaDAO sql = new DisciplinaDAO((com.mysql.jdbc.Connection) con);
-        List<Disciplina> lista = new ArrayList<>();
-        String nome = jCB_disc.getSelectedItem().toString();
-
-        lista = sql.ConsultaCodigoDisc(nome);
-
-        for (Disciplina b : lista) {
-            int a = b.getId();
-            jtf_id_disc.setText("" + a);
-        }
-        Conexao.FecharConexao((com.mysql.jdbc.Connection) con);
-        
-        
-    }//GEN-LAST:event_jCB_discActionPerformed
-
-    private void jtf_id_assuntoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_id_assuntoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_id_assuntoActionPerformed
-
-    private void jCB_assuntoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCB_assuntoActionPerformed
-        Connection con = Conexao.AbrirConexao();
-        AssuntoDAO sql = new AssuntoDAO((com.mysql.jdbc.Connection) con);
-        List<Assunto> lista = new ArrayList<>();
-        String nome = jCB_assunto.getSelectedItem().toString();
-
-        lista = sql.ConsultaCodigoAssunto(nome);
-
-        for (Assunto b : lista) {
-            int a = b.getId();
-            jtf_id_assunto.setText("" + a);
-        }
-        Conexao.FecharConexao((com.mysql.jdbc.Connection) con);
-    }//GEN-LAST:event_jCB_assuntoActionPerformed
-
     private void jCB_gabActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCB_gabActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jCB_gabActionPerformed
+
+    private void btn_pesq_disciActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_pesq_disciActionPerformed
+    String id = id_questao.getText();
+    Connection con  = Conexao.AbrirConexao();
+    QuestaoDAO sql = new QuestaoDAO((com.mysql.jdbc.Connection) con);
+    int cod = Integer.parseInt(id);
+    
+        if (id.equals("")) {
+            JOptionPane.showMessageDialog(null, "Digite um código para atualizar",
+                        "Banco de questões", JOptionPane.WARNING_MESSAGE);
+        }
+        
+        
+    InserirDados(cod);
+    id_questao.setText("");
+    }//GEN-LAST:event_btn_pesq_disciActionPerformed
+
+    private void id_qActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_id_qActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_id_qActionPerformed
+
+    private void gabaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gabaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_gabaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -446,14 +410,206 @@ dispose();
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(cadastrar_questao.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(alterar_questao.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(cadastrar_questao.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(alterar_questao.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(cadastrar_questao.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(alterar_questao.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(cadastrar_questao.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(alterar_questao.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -522,7 +678,7 @@ dispose();
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new cadastrar_questao().setVisible(true);
+                new alterar_questao().setVisible(true);
             }
         });
     }
@@ -536,19 +692,22 @@ dispose();
     private javax.swing.JButton btn_Assunto;
     private javax.swing.JButton btn_Prova;
     private javax.swing.JButton btn_Questao;
-    private javax.swing.JButton btn_cad_disc;
+    private javax.swing.JButton btn_alt_q;
+    private javax.swing.JButton btn_pesq_disci;
     private javax.swing.JTextArea enunciado;
+    private javax.swing.JTextField gaba;
+    private javax.swing.JTextField id_q;
+    private javax.swing.JTextField id_questao;
     private javax.swing.JButton jButton3;
-    private javax.swing.JComboBox<String> jCB_assunto;
-    private javax.swing.JComboBox<String> jCB_disc;
     private javax.swing.JComboBox<String> jCB_gab;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
@@ -557,7 +716,5 @@ dispose();
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
-    private javax.swing.JTextField jtf_id_assunto;
-    private javax.swing.JTextField jtf_id_disc;
     // End of variables declaration//GEN-END:variables
 }
