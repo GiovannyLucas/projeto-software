@@ -198,4 +198,21 @@ public class DisciplinaDAO extends ExecuteSQL {
     
     }
     
+    public String Excluir_Disciplina(Disciplina a){
+        String sql = "DELETE FROM disciplina WHERE id = ? AND nome = ?";
+        try {
+            PreparedStatement ps = getCon().prepareStatement(sql);
+            ps.setInt(1, a.getId());
+            ps.setString(2, a.getNome());
+            
+            if (ps.executeUpdate() > 0) {
+                return "Excluído com sucesso!";
+            } else {
+                return "Erro ao excluir!";
+            }
+        } catch (Exception e) {
+            return e.getMessage();
+        }
+    }
+    
 }

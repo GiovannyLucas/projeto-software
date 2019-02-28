@@ -223,4 +223,43 @@ public class ProfessorDAO extends ExecuteSQL{
             return null;
         }   
     }
+    
+    public List<Professor> ConsultaCodigoProf(String nome){
+        String sql = "SELECT id FROM professor WHERE nome = '"+ nome +"'";
+        List<Professor> lista = new ArrayList<>();
+        try {
+            PreparedStatement ps = getCon().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            
+            if (rs != null) {
+                while (rs.next()) {
+                    Professor a = new Professor();
+                    a.setId(rs.getInt(1));
+                    lista.add(a);
+                }
+                return lista;
+            } else {
+                return null;
+            }
+        } catch (Exception e) {
+            return null;
+        }
+    }
+    
+    public String Excluir_Professor(Professor a){
+        String sql = "DELETE FROM professor WHERE id = ? AND nome = ?";
+        try {
+            PreparedStatement ps = getCon().prepareStatement(sql);
+            ps.setInt(1, a.getId());
+            ps.setString(2, a.getNome());
+            
+            if (ps.executeUpdate() > 0) {
+                return "Excluído com sucesso!";
+            } else {
+                return "Erro ao excluir!";
+            }
+        } catch (Exception e) {
+            return e.getMessage();
+        }
+    }
 }

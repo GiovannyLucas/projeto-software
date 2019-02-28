@@ -8,6 +8,7 @@ package Principal;
 import Views.Alterar.*;
 import Views.Cadastrar.*;
 import Views.Consultar.*;
+import Views.Excluir.*;
 
 /**
  *
@@ -24,16 +25,16 @@ public class TelaAdmin extends javax.swing.JFrame {
     }
     
     public void LimparTela() {
-        cad_prof.setVisible(true);
+        cad_prof.setVisible(false);
         cad_turma.setVisible(false);
         cad_disc.setVisible(false);
-        alt_prof.setVisible(true);
+        alt_prof.setVisible(false);
         alt_turma.setVisible(false);
         alt_disc.setVisible(false);
-        cons_prof.setVisible(true);
+        cons_prof.setVisible(false);
         cons_turma.setVisible(false);
         cons_disc.setVisible(false);
-        exc_prof.setVisible(true);
+        exc_prof.setVisible(false);
         exc_turma.setVisible(false);
         exc_disc.setVisible(false);
     }

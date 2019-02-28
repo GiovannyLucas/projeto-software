@@ -33,16 +33,16 @@ public class TurmaDAO extends ExecuteSQL {
         }
     }
 
-    public List<Disciplina> ConsultaCodigoTurma(String nome){
-        String sql = "SELECT id FROM disciplina WHERE nome = '"+ nome +"'";
-        List<Disciplina> lista = new ArrayList<>();
+    public List<Turma> ConsultaCodigoTurma(String serie){
+        String sql = "SELECT id FROM turma WHERE serie = '"+ serie +"'";
+        List<Turma> lista = new ArrayList<>();
         try {
             PreparedStatement ps = getCon().prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             
             if (rs != null) {
                 while (rs.next()) {
-                    Disciplina a = new Disciplina();
+                    Turma a = new Turma();
                     a.setId(rs.getInt(1));
                     lista.add(a);
                 }
@@ -175,6 +175,44 @@ public class TurmaDAO extends ExecuteSQL {
         } catch (Exception e) {
             return null;
         }
+    }
     
+    public List<Turma> ListarComboTurma(){
+        String sql = "SELECT serie FROM turma ORDER BY serie";
+        List<Turma> lista = new ArrayList<>();
+        try {
+            PreparedStatement ps = getCon().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            
+            if (rs != null) {
+                while (rs.next()) {
+                    Turma a = new Turma();
+                    a.setSerie(rs.getString(1));
+                    lista.add(a);
+                }
+                return lista;
+            } else {
+                return null;
+            }
+        } catch (Exception e) {
+            return null;
+        }
+    }
+    
+    public String Excluir_Turma(Turma a){
+        String sql = "DELETE FROM turma WHERE id = ? AND serie = ?";
+        try {
+            PreparedStatement ps = getCon().prepareStatement(sql);
+            ps.setInt(1, a.getId());
+            ps.setString(2, a.getSerie());
+            
+            if (ps.executeUpdate() > 0) {
+                return "Excluído com sucesso!";
+            } else {
+                return "Erro ao excluir!";
+            }
+        } catch (Exception e) {
+            return e.getMessage();
+        }
     }
 }
