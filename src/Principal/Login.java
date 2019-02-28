@@ -6,8 +6,13 @@
 package Principal;
 
 import DAO.AdminDAO;
+import DAO.TurmaDAO;
 import DAO.Conexao;
+import DAO.ProfessorDAO;
+import Modelo.Turma;
 import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 
 /**
@@ -33,25 +38,25 @@ public class Login extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jComboBox1 = new javax.swing.JComboBox<>();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        email = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
-        senha = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
+        jCB_disc = new javax.swing.JComboBox<>();
+        jtf_id_prof = new javax.swing.JTextField();
         retangulo = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        email1 = new javax.swing.JTextField();
+        email_prof = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
-        senha1 = new javax.swing.JTextField();
-        jButton2 = new javax.swing.JButton();
+        entrar_prof = new javax.swing.JButton();
+        senha_prof = new javax.swing.JPasswordField();
         retangulo_prof = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         email_adm = new javax.swing.JTextField();
@@ -63,6 +68,8 @@ public class Login extends javax.swing.JFrame {
         jLabel14 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
 
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
 
@@ -72,9 +79,9 @@ public class Login extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 153, 0));
-        jLabel1.setText("E-mail:");
+        jLabel1.setText("Turma:");
         jPanel1.add(jLabel1);
-        jLabel1.setBounds(280, 210, 230, 30);
+        jLabel1.setBounds(270, 260, 250, 30);
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/images.png"))); // NOI18N
         jPanel1.add(jLabel4);
@@ -85,20 +92,6 @@ public class Login extends javax.swing.JFrame {
         jLabel2.setText("ENTRAR");
         jPanel1.add(jLabel2);
         jLabel2.setBounds(280, 90, 190, 50);
-
-        email.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jPanel1.add(email);
-        email.setBounds(280, 250, 230, 40);
-
-        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(0, 153, 0));
-        jLabel5.setText("Senha:");
-        jPanel1.add(jLabel5);
-        jLabel5.setBounds(280, 310, 230, 30);
-
-        senha.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jPanel1.add(senha);
-        senha.setBounds(280, 350, 230, 40);
 
         jButton1.setBackground(new java.awt.Color(0, 102, 0));
         jButton1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -115,6 +108,23 @@ public class Login extends javax.swing.JFrame {
         jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/couple-icon-1.png"))); // NOI18N
         jPanel1.add(jLabel7);
         jLabel7.setBounds(430, 70, 90, 80);
+
+        jCB_disc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCB_discActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jCB_disc);
+        jCB_disc.setBounds(270, 290, 250, 40);
+
+        jtf_id_prof.setEditable(false);
+        jtf_id_prof.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtf_id_profActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jtf_id_prof);
+        jtf_id_prof.setBounds(370, 300, 30, 20);
 
         retangulo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Rectangle 3.png"))); // NOI18N
         jPanel1.add(retangulo);
@@ -140,9 +150,9 @@ public class Login extends javax.swing.JFrame {
         jPanel2.add(jLabel6);
         jLabel6.setBounds(280, 210, 230, 30);
 
-        email1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jPanel2.add(email1);
-        email1.setBounds(280, 250, 230, 40);
+        email_prof.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jPanel2.add(email_prof);
+        email_prof.setBounds(280, 250, 230, 40);
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(0, 153, 0));
@@ -150,16 +160,19 @@ public class Login extends javax.swing.JFrame {
         jPanel2.add(jLabel9);
         jLabel9.setBounds(280, 310, 230, 30);
 
-        senha1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jPanel2.add(senha1);
-        senha1.setBounds(280, 350, 230, 40);
-
-        jButton2.setBackground(new java.awt.Color(0, 102, 0));
-        jButton2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(255, 255, 255));
-        jButton2.setText("Entrar");
-        jPanel2.add(jButton2);
-        jButton2.setBounds(380, 440, 130, 40);
+        entrar_prof.setBackground(new java.awt.Color(0, 102, 0));
+        entrar_prof.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        entrar_prof.setForeground(new java.awt.Color(255, 255, 255));
+        entrar_prof.setText("Entrar");
+        entrar_prof.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                entrar_profActionPerformed(evt);
+            }
+        });
+        jPanel2.add(entrar_prof);
+        entrar_prof.setBounds(380, 440, 130, 40);
+        jPanel2.add(senha_prof);
+        senha_prof.setBounds(280, 350, 230, 40);
 
         retangulo_prof.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Rectangle2.png"))); // NOI18N
         jPanel2.add(retangulo_prof);
@@ -264,6 +277,54 @@ public class Login extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btn_Entrar_AdminActionPerformed
 
+    private void entrar_profActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_entrar_profActionPerformed
+        Connection con = Conexao.AbrirConexao();
+        ProfessorDAO sql = new ProfessorDAO((com.mysql.jdbc.Connection) con);
+        String email = email_prof.getText();
+        String senha = senha_prof.getText();
+        
+        if (email.equals("") || senha.equals("")) {
+            JOptionPane.showMessageDialog(null, "Nenhum campo pode estar vazio!",
+                    "Banco de questões", JOptionPane.WARNING_MESSAGE);
+            email_prof.setText("");
+            senha_prof.setText("");
+        } else {
+            if (sql.Logar(email, senha) == true) {
+                
+                dispose();
+                new TelaProf().setVisible(true);
+                
+            } else {
+                JOptionPane.showMessageDialog(null, "Usuário e/ou Senha incorreto(s)!",
+                    "Banco de questões", JOptionPane.ERROR_MESSAGE);
+                email_prof.setText("");
+                senha_prof.setText("");
+            }
+        }
+    }//GEN-LAST:event_entrar_profActionPerformed
+
+    private void jCB_discActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCB_discActionPerformed
+        Connection con = Conexao.AbrirConexao();
+        TurmaDAO sql = new TurmaDAO((com.mysql.jdbc.Connection) con);
+        List<Turma> lista = new ArrayList<>();
+        String nome = jCB_disc.getSelectedItem().toString();
+
+        lista = sql.ConsultaCodigoTurma(nome);
+
+        for (Turma b : lista) {
+            int a = b.getId();
+            jtf_id_prof.setText("" + a);
+            
+            //fazer pegar o id e colocar em um arquivo com manipulação
+            //para poder mostrar apenas as provas de determinada sala
+        }
+        Conexao.FecharConexao((com.mysql.jdbc.Connection) con);
+    }//GEN-LAST:event_jCB_discActionPerformed
+
+    private void jtf_id_profActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_id_profActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtf_id_profActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -301,11 +362,12 @@ public class Login extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_Entrar_Admin;
-    private javax.swing.JTextField email;
-    private javax.swing.JTextField email1;
     private javax.swing.JTextField email_adm;
+    private javax.swing.JTextField email_prof;
+    private javax.swing.JButton entrar_prof;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JComboBox<String> jCB_disc;
+    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -315,7 +377,6 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
@@ -324,10 +385,10 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTextField jtf_id_prof;
     private javax.swing.JLabel retangulo;
     private javax.swing.JLabel retangulo_prof;
-    private javax.swing.JTextField senha;
-    private javax.swing.JTextField senha1;
     private javax.swing.JPasswordField senha_adm;
+    private javax.swing.JPasswordField senha_prof;
     // End of variables declaration//GEN-END:variables
 }

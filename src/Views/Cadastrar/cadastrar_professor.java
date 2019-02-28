@@ -171,7 +171,7 @@ public class cadastrar_professor extends javax.swing.JFrame {
 
         jLabel14.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(255, 255, 51));
-        jLabel14.setText("Matéria:");
+        jLabel14.setText("Disciplina:");
         jPanel1.add(jLabel14);
         jLabel14.setBounds(280, 400, 230, 30);
 

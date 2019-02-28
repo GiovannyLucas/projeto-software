@@ -125,6 +125,11 @@ public class TelaProf extends javax.swing.JFrame {
         jButton3.setBackground(new java.awt.Color(153, 0, 0));
         jButton3.setForeground(new java.awt.Color(255, 255, 255));
         jButton3.setText("Sair");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
         jPanel1.add(jButton3);
         jButton3.setBounds(450, 30, 70, 20);
 
@@ -378,6 +383,11 @@ public class TelaProf extends javax.swing.JFrame {
     private void btn_QuestaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_QuestaoActionPerformed
         questao();
     }//GEN-LAST:event_btn_QuestaoActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+dispose();
+new Login().setVisible(true);
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments

@@ -8,11 +8,35 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import modelo.Admin;
 
 public class ProfessorDAO extends ExecuteSQL{
     
     public ProfessorDAO(Connection con) {
         super(con);
+    }
+    
+    public boolean Logar(String login, String senha){
+        boolean finalResult = false;
+        
+        try {
+            String consulta  = "SELECT email, senha FROM professor WHERE email = '"+ login + "' AND senha = '"+ senha +"'";
+            PreparedStatement ps = getCon().prepareStatement(consulta);
+            ResultSet rs = ps.executeQuery();
+            
+            if (rs != null) {
+                while (rs.next()) {                    
+                    Professor a = new Professor();
+                    a.setEmail(rs.getString(1));
+                    a.setSenha(rs.getString(2));
+                    finalResult = true;
+                }
+            }
+            
+        } catch (SQLException ex) {
+            ex.getMessage();
+        }
+        return finalResult;
     }
     
     public String Cadastrar_Professor(Professor a) {
