@@ -5,8 +5,11 @@
  */
 package Principal;
 
-import Views.Alterar.alterar_questao;
+import Views.Excluir.excluir_prova;
+import Views.Alterar.*;
 import Views.Cadastrar.*;
+import Views.Consultar.*;
+import Views.Excluir.*;
 
 /**
  *
@@ -27,7 +30,6 @@ public class TelaProf extends javax.swing.JFrame {
         cad_prova.setVisible(false);
         cad_assunto.setVisible(false);
         alt_questao.setVisible(false);
-        alt_prova.setVisible(false);
         alt_assunto.setVisible(false);
         cons_questao.setVisible(false);
         cons_prova.setVisible(false);
@@ -42,7 +44,6 @@ public class TelaProf extends javax.swing.JFrame {
         cad_prova.setVisible(false);
         cad_assunto.setVisible(false);
         alt_questao.setVisible(true);
-        alt_prova.setVisible(false);
         alt_assunto.setVisible(false);
         cons_questao.setVisible(true);
         cons_prova.setVisible(false);
@@ -56,7 +57,6 @@ public class TelaProf extends javax.swing.JFrame {
         cad_prova.setVisible(true);
         cad_assunto.setVisible(false);
         alt_questao.setVisible(false);
-        alt_prova.setVisible(true);
         alt_assunto.setVisible(false);
         cons_questao.setVisible(false);
         cons_prova.setVisible(true);
@@ -70,7 +70,6 @@ public class TelaProf extends javax.swing.JFrame {
         cad_prova.setVisible(false);
         cad_assunto.setVisible(true);
         alt_questao.setVisible(false);
-        alt_prova.setVisible(false);
         alt_assunto.setVisible(true);
         cons_questao.setVisible(false);
         cons_prova.setVisible(false);

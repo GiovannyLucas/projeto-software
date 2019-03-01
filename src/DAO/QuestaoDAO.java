@@ -117,11 +117,11 @@ public class QuestaoDAO extends ExecuteSQL{
         }
     }
     
-        public List<Professor> Pesquisar_Nome_Professor(String nome){
-        String sql = "SELECT id, nome, email, senha, id_disc "
-                + "FROM professor WHERE nome LIKE '%"+ nome +"%'";
+        public List<Questao> Pesquisar_Cod_Questao_Disc(int cod){
+        String sql = "SELECT id, id_disciplina, id_assunto, enunciado, gab "
+                + "FROM questoes WHERE id_disciplina = '"+ cod +"'";
        
-        List<Professor> lista = new ArrayList<>();
+        List<Questao> lista = new ArrayList<>();
             
         try {
             PreparedStatement ps = getCon().prepareStatement(sql);
@@ -129,12 +129,12 @@ public class QuestaoDAO extends ExecuteSQL{
             
             if (rs != null) {
                 while (rs.next()) {
-                    Professor a = new Professor();
+                    Questao a = new Questao();
                     a.setId(rs.getInt(1));
-                    a.setNome(rs.getString(2));
-                    a.setEmail(rs.getString(3));
-                    a.setSenha(rs.getString(4));
-                    a.setId_disc(rs.getInt(5));
+                    a.setId_disc(rs.getInt(2));
+                    a.setId_assu(rs.getInt(3));
+                    a.setEnun(rs.getString(4));
+                    a.setGab(rs.getString(5));
                     
                     lista.add(a);
                 }
@@ -144,15 +144,14 @@ public class QuestaoDAO extends ExecuteSQL{
             }
         } catch (Exception e) {
             return null;
-        }
-        
+        }   
     }
     
-    public List<Professor> Pesquisar_Cod_Professor(int cod){
-        String sql = "SELECT id, nome, email, senha, id_disc "
-                + "FROM professor WHERE id = '"+ cod +"'";
+        public List<Questao> Pesquisar_Cod_Questao_Assu(int cod){
+        String sql = "SELECT id, id_disciplina, id_assunto, enunciado, gab "
+                + "FROM questoes WHERE id_assunto = '"+ cod +"'";
        
-        List<Professor> lista = new ArrayList<>();
+        List<Questao> lista = new ArrayList<>();
             
         try {
             PreparedStatement ps = getCon().prepareStatement(sql);
@@ -160,12 +159,42 @@ public class QuestaoDAO extends ExecuteSQL{
             
             if (rs != null) {
                 while (rs.next()) {
-                    Professor a = new Professor();
+                    Questao a = new Questao();
                     a.setId(rs.getInt(1));
-                    a.setNome(rs.getString(2));
-                    a.setEmail(rs.getString(3));
-                    a.setSenha(rs.getString(4));
-                    a.setId_disc(rs.getInt(5));
+                    a.setId_disc(rs.getInt(2));
+                    a.setId_assu(rs.getInt(3));
+                    a.setEnun(rs.getString(4));
+                    a.setGab(rs.getString(5));
+                    
+                    lista.add(a);
+                }
+                return lista;
+            } else {
+                return null;
+            }
+        } catch (Exception e) {
+            return null;
+        }   
+    }
+        
+    public List<Questao> Pesquisar_Cod_Questao(int cod){
+        String sql = "SELECT id, id_disciplina, id_assunto, enunciado, gab "
+                + "FROM questoes WHERE id = '"+ cod +"'";
+       
+        List<Questao> lista = new ArrayList<>();
+            
+        try {
+            PreparedStatement ps = getCon().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            
+            if (rs != null) {
+                while (rs.next()) {
+                    Questao a = new Questao();
+                    a.setId(rs.getInt(1));
+                    a.setId_disc(rs.getInt(2));
+                    a.setId_assu(rs.getInt(3));
+                    a.setEnun(rs.getString(4));
+                    a.setGab(rs.getString(5));
                     
                     lista.add(a);
                 }
@@ -193,6 +222,34 @@ public class QuestaoDAO extends ExecuteSQL{
                     a.setId_assu(rs.getInt(2));
                     a.setEnun(rs.getString(3));
                     a.setGab(rs.getString(4));
+                    
+                    lista.add(a);
+                }
+                return lista;
+            } else {
+                return null;
+            }
+        } catch (Exception e) {
+            return null;
+        }
+    }
+    
+    public List<Questao> Listar_Questao_Consulta() {
+        String sql = "SELECT id, id_disciplina, id_assunto, enunciado, gab FROM questoes";
+        List<Questao> lista = new ArrayList<>();
+        
+        try {
+            PreparedStatement ps = getCon().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            
+            if (rs != null) {
+                while (rs.next()) {
+                    Questao a = new Questao();
+                    a.setId(rs.getInt(1));
+                    a.setId_disc(rs.getInt(2));
+                    a.setId_assu(rs.getInt(3));
+                    a.setEnun(rs.getString(4));
+                    a.setGab(rs.getString(5));
                     
                     lista.add(a);
                 }
@@ -300,12 +357,11 @@ public class QuestaoDAO extends ExecuteSQL{
         }
     }
     
-    public String Excluir_Professor(Professor a){
-        String sql = "DELETE FROM professor WHERE id = ? AND nome = ?";
+    public String Excluir_Questao(Questao a){
+        String sql = "DELETE FROM questoes WHERE id = ?";
         try {
             PreparedStatement ps = getCon().prepareStatement(sql);
             ps.setInt(1, a.getId());
-            ps.setString(2, a.getNome());
             
             if (ps.executeUpdate() > 0) {
                 return "Excluído com sucesso!";

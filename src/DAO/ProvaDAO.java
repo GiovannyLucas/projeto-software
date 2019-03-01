@@ -89,17 +89,17 @@ public class ProvaDAO extends ExecuteSQL{
         }
     }
     
-    public List<Professor> ListarComboProfessor(){
-        String sql = "SELECT nome FROM professor ORDER BY nome";
-        List<Professor> lista = new ArrayList<>();
+    public List<Prova> ListarComboProva(){
+        String sql = "SELECT id FROM prova";
+        List<Prova> lista = new ArrayList<>();
         try {
             PreparedStatement ps = getCon().prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             
             if (rs != null) {
                 while (rs.next()) {
-                    Professor a = new Professor();
-                    a.setNome(rs.getString(1));
+                    Prova a = new Prova();
+                    a.setId(rs.getInt(1));
                     lista.add(a);
                 }
                 return lista;
@@ -172,9 +172,9 @@ public class ProvaDAO extends ExecuteSQL{
         }   
     }
     
-    public List<Professor> Listar_Professor() {
-        String sql = "SELECT id, nome, email, senha, id_disc FROM professor";
-        List<Professor> lista = new ArrayList<>();
+    public List<Prova> Listar_Prova() {
+        String sql = "SELECT * FROM prova";
+        List<Prova> lista = new ArrayList<>();
         
         try {
             PreparedStatement ps = getCon().prepareStatement(sql);
@@ -182,12 +182,16 @@ public class ProvaDAO extends ExecuteSQL{
             
             if (rs != null) {
                 while (rs.next()) {
-                    Professor a = new Professor();
+                    Prova a = new Prova();
                     a.setId(rs.getInt(1));
-                    a.setNome(rs.getString(2));
-                    a.setEmail(rs.getString(3));
-                    a.setSenha(rs.getString(4));
-                    a.setId_disc(rs.getInt(5));
+                    a.setId_q1(rs.getInt(2));
+                    a.setId_q2(rs.getInt(3));
+                    a.setId_q3(rs.getInt(4));
+                    a.setId_q4(rs.getInt(5));
+                    a.setId_q5(rs.getInt(6));
+                    a.setId_disc(rs.getInt(7));
+                    a.setId_assu(rs.getInt(8));
+                    a.setId_turma(rs.getInt(9));
                     
                     lista.add(a);
                 }
@@ -200,11 +204,11 @@ public class ProvaDAO extends ExecuteSQL{
         }
     }
     
-    public List<Professor> Pesquisar_Cod_Disc_Prof(int cod){
+    public List<Prova> Pesquisar_Cod_Prova(int cod){
         String sql = "SELECT * "
-                + "FROM professor WHERE id_disc = '"+ cod +"'";
+                + "FROM prova WHERE id = '"+ cod +"'";
        
-        List<Professor> lista = new ArrayList<>();
+        List<Prova> lista = new ArrayList<>();
             
         try {
             PreparedStatement ps = getCon().prepareStatement(sql);
@@ -212,13 +216,16 @@ public class ProvaDAO extends ExecuteSQL{
             
             if (rs != null) {
                 while (rs.next()) {
-                    Professor a = new Professor();
+                    Prova a = new Prova();
                     a.setId(rs.getInt(1));
-                    a.setNome(rs.getString(2));
-                    a.setEmail(rs.getString(3));
-                    a.setSenha(rs.getString(4));
-                    a.setId_disc(rs.getInt(5));a.setId(rs.getInt(1));
-                    a.setNome(rs.getString(2));
+                    a.setId_q1(rs.getInt(2));
+                    a.setId_q2(rs.getInt(3));
+                    a.setId_q3(rs.getInt(4));
+                    a.setId_q4(rs.getInt(5));
+                    a.setId_q5(rs.getInt(6));
+                    a.setId_disc(rs.getInt(7));
+                    a.setId_assu(rs.getInt(8));
+                    a.setId_turma(rs.getInt(9));
                     
                     lista.add(a);
                 }
@@ -231,16 +238,84 @@ public class ProvaDAO extends ExecuteSQL{
         }   
     }
     
-    public List<Professor> ConsultaCodigoProf(String nome){
-        String sql = "SELECT id FROM professor WHERE nome = '"+ nome +"'";
-        List<Professor> lista = new ArrayList<>();
+    public List<Prova> Pesquisar_Cod_Prova_Assunto(int cod){
+        String sql = "SELECT * "
+                + "FROM prova WHERE id_assunto = '"+ cod +"'";
+       
+        List<Prova> lista = new ArrayList<>();
+            
         try {
             PreparedStatement ps = getCon().prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             
             if (rs != null) {
                 while (rs.next()) {
-                    Professor a = new Professor();
+                    Prova a = new Prova();
+                    a.setId(rs.getInt(1));
+                    a.setId_q1(rs.getInt(2));
+                    a.setId_q2(rs.getInt(3));
+                    a.setId_q3(rs.getInt(4));
+                    a.setId_q4(rs.getInt(5));
+                    a.setId_q5(rs.getInt(6));
+                    a.setId_disc(rs.getInt(7));
+                    a.setId_assu(rs.getInt(8));
+                    a.setId_turma(rs.getInt(9));
+                    
+                    lista.add(a);
+                }
+                return lista;
+            } else {
+                return null;
+            }
+        } catch (Exception e) {
+            return null;
+        }   
+    }
+    
+    public List<Prova> Pesquisar_Cod_Prova_Turma(int cod){
+        String sql = "SELECT * "
+                + "FROM prova WHERE id_turma = '"+ cod +"'";
+       
+        List<Prova> lista = new ArrayList<>();
+            
+        try {
+            PreparedStatement ps = getCon().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            
+            if (rs != null) {
+                while (rs.next()) {
+                    Prova a = new Prova();
+                    a.setId(rs.getInt(1));
+                    a.setId_q1(rs.getInt(2));
+                    a.setId_q2(rs.getInt(3));
+                    a.setId_q3(rs.getInt(4));
+                    a.setId_q4(rs.getInt(5));
+                    a.setId_q5(rs.getInt(6));
+                    a.setId_disc(rs.getInt(7));
+                    a.setId_assu(rs.getInt(8));
+                    a.setId_turma(rs.getInt(9));
+                    
+                    lista.add(a);
+                }
+                return lista;
+            } else {
+                return null;
+            }
+        } catch (Exception e) {
+            return null;
+        }   
+    }
+    
+    public List<Prova> ConsultaCodigoProva(int id){
+        String sql = "SELECT id FROM prova WHERE id = '"+ id +"'";
+        List<Prova> lista = new ArrayList<>();
+        try {
+            PreparedStatement ps = getCon().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            
+            if (rs != null) {
+                while (rs.next()) {
+                    Prova a = new Prova();
                     a.setId(rs.getInt(1));
                     lista.add(a);
                 }
@@ -259,6 +334,22 @@ public class ProvaDAO extends ExecuteSQL{
             PreparedStatement ps = getCon().prepareStatement(sql);
             ps.setInt(1, a.getId());
             ps.setString(2, a.getNome());
+            
+            if (ps.executeUpdate() > 0) {
+                return "Excluído com sucesso!";
+            } else {
+                return "Erro ao excluir!";
+            }
+        } catch (Exception e) {
+            return e.getMessage();
+        }
+    }
+    
+    public String Excluir_Prova(Prova a){
+        String sql = "DELETE FROM prova WHERE id = ?";
+        try {
+            PreparedStatement ps = getCon().prepareStatement(sql);
+            ps.setInt(1, a.getId());
             
             if (ps.executeUpdate() > 0) {
                 return "Excluído com sucesso!";

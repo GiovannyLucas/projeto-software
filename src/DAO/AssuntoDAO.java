@@ -1,6 +1,7 @@
 package DAO;
 
 import Modelo.Assunto;
+import Modelo.Prova;
 import com.mysql.jdbc.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -142,11 +143,11 @@ public class AssuntoDAO extends ExecuteSQL {
         }
     }
     
-    public List<Disciplina> Pesquisar_Nome_Disciplina(String nome){
-        String sql = "SELECT id, nome "
-                + "FROM disciplina WHERE nome LIKE '%"+ nome +"%'";
+    public List<Assunto> Pesquisar_Nome_Assunto(String nome){
+        String sql = "SELECT * "
+                + "FROM assunto WHERE nome LIKE '%"+ nome +"%'";
        
-        List<Disciplina> lista = new ArrayList<>();
+        List<Assunto> lista = new ArrayList<>();
             
         try {
             PreparedStatement ps = getCon().prepareStatement(sql);
@@ -154,9 +155,10 @@ public class AssuntoDAO extends ExecuteSQL {
             
             if (rs != null) {
                 while (rs.next()) {
-                    Disciplina a = new Disciplina();
+                    Assunto a = new Assunto();
                     a.setId(rs.getInt(1));
                     a.setNome(rs.getString(2));
+                    a.setId_disc(rs.getInt(3));
                     
                     lista.add(a);
                 }
@@ -170,11 +172,11 @@ public class AssuntoDAO extends ExecuteSQL {
         
     }
     
-    public List<Disciplina> Pesquisar_Cod_Disciplina(int cod){
-        String sql = "SELECT id, nome "
-                + "FROM disciplina WHERE id = '"+ cod +"'";
+    public List<Assunto> Pesquisar_Cod_Assunto(int cod){
+        String sql = "SELECT * "
+                + "FROM assunto WHERE id = '"+ cod +"'";
        
-        List<Disciplina> lista = new ArrayList<>();
+        List<Assunto> lista = new ArrayList<>();
             
         try {
             PreparedStatement ps = getCon().prepareStatement(sql);
@@ -182,9 +184,38 @@ public class AssuntoDAO extends ExecuteSQL {
             
             if (rs != null) {
                 while (rs.next()) {
-                    Disciplina a = new Disciplina();
+                    Assunto a = new Assunto();
                     a.setId(rs.getInt(1));
                     a.setNome(rs.getString(2));
+                    a.setId_disc(rs.getInt(3));
+                    
+                    lista.add(a);
+                }
+                return lista;
+            } else {
+                return null;
+            }
+        } catch (Exception e) {
+            return null;
+        }   
+    }
+    
+    public List<Assunto> Pesquisar_Cod_Disc_Assun(int cod){
+        String sql = "SELECT * "
+                + "FROM assunto WHERE id_disc = '"+ cod +"'";
+       
+        List<Assunto> lista = new ArrayList<>();
+            
+        try {
+            PreparedStatement ps = getCon().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            
+            if (rs != null) {
+                while (rs.next()) {
+                    Assunto a = new Assunto();
+                    a.setId(rs.getInt(1));
+                    a.setNome(rs.getString(2));
+                    a.setId_disc(rs.getInt(3));
                     
                     lista.add(a);
                 }
@@ -223,8 +254,35 @@ public class AssuntoDAO extends ExecuteSQL {
     
     }
     
-    public String Excluir_Disciplina(Disciplina a){
-        String sql = "DELETE FROM disciplina WHERE id = ? AND nome = ?";
+    public List<Assunto> Listar_Assunto_Consulta() {
+        String sql = "SELECT * FROM assunto";
+        List<Assunto> lista = new ArrayList<>();
+            
+        try {
+            PreparedStatement ps = getCon().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            
+            if (rs != null) {
+                while (rs.next()) {
+                    Assunto a = new Assunto();
+                    a.setId(rs.getInt(1));
+                    a.setNome(rs.getString(2));
+                    a.setId_disc(rs.getInt(3));
+                    
+                    lista.add(a);
+                }
+                return lista;
+            } else {
+                return null;
+            }
+        } catch (Exception e) {
+            return null;
+        }
+    
+    }
+    
+    public String Excluir_Assunto(Assunto a){
+        String sql = "DELETE FROM assunto WHERE id = ? AND nome = ?";
         try {
             PreparedStatement ps = getCon().prepareStatement(sql);
             ps.setInt(1, a.getId());
