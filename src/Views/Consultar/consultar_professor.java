@@ -109,6 +109,7 @@ public class consultar_professor extends javax.swing.JFrame {
         jLabel13 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        jLabel14 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
 
@@ -251,12 +252,12 @@ public class consultar_professor extends javax.swing.JFrame {
         jPanel1.add(btn_pesq_disci);
         btn_pesq_disci.setBounds(630, 220, 90, 40);
 
-        jLabel13.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel13.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(255, 255, 51));
-        jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel13.setText("Pesquisar por nome do professor:");
+        jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel13.setText("Disciplina:");
         jPanel1.add(jLabel13);
-        jLabel13.setBounds(280, 190, 230, 30);
+        jLabel13.setBounds(630, 260, 120, 30);
 
         jTable1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -279,6 +280,13 @@ public class consultar_professor extends javax.swing.JFrame {
 
         jPanel1.add(jScrollPane2);
         jScrollPane2.setBounds(630, 280, 120, 250);
+
+        jLabel14.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel14.setForeground(new java.awt.Color(255, 255, 51));
+        jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel14.setText("Pesquisar por nome do professor:");
+        jPanel1.add(jLabel14);
+        jLabel14.setBounds(280, 190, 230, 30);
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/MenuAdmin.png"))); // NOI18N
         jLabel2.setText("jLabel2");
@@ -496,6 +504,7 @@ public class consultar_professor extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
