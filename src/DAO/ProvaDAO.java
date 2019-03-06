@@ -111,7 +111,31 @@ public class ProvaDAO extends ExecuteSQL{
         }
     }
     
-        public List<Professor> Pesquisar_Nome_Professor(String nome){
+    public List<Prova> ListarComboProva_ID(int id_turma){
+        String sql = "SELECT id FROM prova WHERE id_turma = "+ id_turma +"";
+        /*String s = "SELECT prova.id_disciplina 'prova.id_disciplina', assunto.nome 'assunto.nome'"+ 
+        "FROM prova prova INNER JOIN disciplina disciplina ON prova.id_disciplina = assunto.id";*/
+        List<Prova> lista = new ArrayList<>();
+        try {
+            PreparedStatement ps = getCon().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            
+            if (rs != null) {
+                while (rs.next()) {
+                    Prova a = new Prova();
+                        a.setId(rs.getInt(1));
+                    lista.add(a);
+                }
+                return lista;
+            } else {
+                return null;
+            }
+        } catch (Exception e) {
+            return null;
+        }
+    }
+    
+    public List<Professor> Pesquisar_Nome_Professor(String nome){
         String sql = "SELECT id, nome, email, senha, id_disc "
                 + "FROM professor WHERE nome LIKE '%"+ nome +"%'";
        

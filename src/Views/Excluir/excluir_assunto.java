@@ -105,7 +105,7 @@ public class excluir_assunto extends javax.swing.JFrame {
         jPanel1.add(btn_Prova);
         btn_Prova.setBounds(10, 20, 110, 40);
 
-        btn_Questao.setBackground(new java.awt.Color(0, 204, 51));
+        btn_Questao.setBackground(new java.awt.Color(0, 153, 0));
         btn_Questao.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btn_Questao.setForeground(new java.awt.Color(255, 255, 255));
         btn_Questao.setText("Questão");
@@ -117,7 +117,7 @@ public class excluir_assunto extends javax.swing.JFrame {
         jPanel1.add(btn_Questao);
         btn_Questao.setBounds(150, 20, 120, 40);
 
-        btn_Assunto.setBackground(new java.awt.Color(0, 153, 0));
+        btn_Assunto.setBackground(new java.awt.Color(0, 204, 51));
         btn_Assunto.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btn_Assunto.setForeground(new java.awt.Color(255, 255, 255));
         btn_Assunto.setText("Assunto");

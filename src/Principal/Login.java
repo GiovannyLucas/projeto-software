@@ -8,8 +8,14 @@ package Principal;
 import DAO.AdminDAO;
 import DAO.TurmaDAO;
 import DAO.Conexao;
+import DAO.DisciplinaDAO;
 import DAO.ProfessorDAO;
+import Modelo.Disciplina;
 import Modelo.Turma;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +33,21 @@ public class Login extends javax.swing.JFrame {
     public Login() {
         initComponents();
         setSize(850, 650);
+        setTitle("Banco de questões");
+        AtualizaCombo();
+    }
+    
+    private void AtualizaCombo(){
+        Connection con = Conexao.AbrirConexao();
+        TurmaDAO sql = new TurmaDAO((com.mysql.jdbc.Connection) con);
+        List<Turma> lista = new ArrayList<>();
+        lista = sql.ListarComboTurma();
+        jCB_turma.addItem("");
+        
+        for (Turma b : lista) {
+            jCB_turma.addItem(b.getSerie());
+        }
+        Conexao.FecharConexao((com.mysql.jdbc.Connection) con);
     }
 
     /**
@@ -46,9 +67,10 @@ public class Login extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
-        jCB_disc = new javax.swing.JComboBox<>();
-        jtf_id_prof = new javax.swing.JTextField();
+        jCB_turma = new javax.swing.JComboBox<>();
+        jtf_id_turma = new javax.swing.JTextField();
         retangulo = new javax.swing.JLabel();
+        jButton3 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -58,6 +80,7 @@ public class Login extends javax.swing.JFrame {
         entrar_prof = new javax.swing.JButton();
         senha_prof = new javax.swing.JPasswordField();
         retangulo_prof = new javax.swing.JLabel();
+        jButton5 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         email_adm = new javax.swing.JTextField();
         senha_adm = new javax.swing.JPasswordField();
@@ -67,6 +90,7 @@ public class Login extends javax.swing.JFrame {
         jLabel13 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
+        jButton4 = new javax.swing.JButton();
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -109,26 +133,37 @@ public class Login extends javax.swing.JFrame {
         jPanel1.add(jLabel7);
         jLabel7.setBounds(430, 70, 90, 80);
 
-        jCB_disc.addActionListener(new java.awt.event.ActionListener() {
+        jCB_turma.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCB_discActionPerformed(evt);
+                jCB_turmaActionPerformed(evt);
             }
         });
-        jPanel1.add(jCB_disc);
-        jCB_disc.setBounds(270, 290, 250, 40);
+        jPanel1.add(jCB_turma);
+        jCB_turma.setBounds(270, 290, 250, 50);
 
-        jtf_id_prof.setEditable(false);
-        jtf_id_prof.addActionListener(new java.awt.event.ActionListener() {
+        jtf_id_turma.setEditable(false);
+        jtf_id_turma.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtf_id_profActionPerformed(evt);
+                jtf_id_turmaActionPerformed(evt);
             }
         });
-        jPanel1.add(jtf_id_prof);
-        jtf_id_prof.setBounds(370, 300, 30, 20);
+        jPanel1.add(jtf_id_turma);
+        jtf_id_turma.setBounds(390, 310, 30, 20);
 
         retangulo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Rectangle 3.png"))); // NOI18N
         jPanel1.add(retangulo);
         retangulo.setBounds(222, 36, 343, 500);
+
+        jButton3.setBackground(new java.awt.Color(153, 0, 0));
+        jButton3.setForeground(new java.awt.Color(255, 255, 255));
+        jButton3.setText("Sair");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton3);
+        jButton3.setBounds(710, 20, 70, 30);
 
         jTabbedPane1.addTab("Aluno", jPanel1);
 
@@ -177,6 +212,17 @@ public class Login extends javax.swing.JFrame {
         retangulo_prof.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Rectangle2.png"))); // NOI18N
         jPanel2.add(retangulo_prof);
         retangulo_prof.setBounds(225, 34, 343, 500);
+
+        jButton5.setBackground(new java.awt.Color(153, 0, 0));
+        jButton5.setForeground(new java.awt.Color(255, 255, 255));
+        jButton5.setText("Sair");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButton5);
+        jButton5.setBounds(710, 20, 70, 30);
 
         jTabbedPane1.addTab("Professor", jPanel2);
 
@@ -227,6 +273,17 @@ public class Login extends javax.swing.JFrame {
         jPanel3.add(jLabel10);
         jLabel10.setBounds(224, 39, 343, 500);
 
+        jButton4.setBackground(new java.awt.Color(153, 0, 0));
+        jButton4.setForeground(new java.awt.Color(255, 255, 255));
+        jButton4.setText("Sair");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+        jPanel3.add(jButton4);
+        jButton4.setBounds(710, 20, 70, 30);
+
         jTabbedPane1.addTab("Admin", jPanel3);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -248,7 +305,36 @@ public class Login extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        String home = System.getProperty("user.home");
+        String turma = jtf_id_turma.getText();
+        
+        if (turma.equals("")) {
+            JOptionPane.showMessageDialog(null, "Nenhuma turma selecionada!",
+                    "Banco de questões", JOptionPane.WARNING_MESSAGE);
+        } else {
+
+            File dir = new File(home + "/arqs");        
+            File arquivo = new File(home + "/arqs/turma.txt");
+
+            try {
+
+                dir.mkdir();
+                arquivo.createNewFile();
+
+                FileWriter fw =  new FileWriter(arquivo, true);
+                BufferedWriter bw = new BufferedWriter(fw);
+                bw.write(turma);
+                bw.close();
+                fw.close();
+
+            } catch (IOException e) {
+
+            }
+
+            dispose();
+            new TelaAluno().setVisible(true);
+
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void btn_Entrar_AdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_Entrar_AdminActionPerformed
@@ -303,27 +389,36 @@ public class Login extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_entrar_profActionPerformed
 
-    private void jCB_discActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCB_discActionPerformed
+    private void jCB_turmaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCB_turmaActionPerformed
         Connection con = Conexao.AbrirConexao();
         TurmaDAO sql = new TurmaDAO((com.mysql.jdbc.Connection) con);
         List<Turma> lista = new ArrayList<>();
-        String nome = jCB_disc.getSelectedItem().toString();
+        String nome = jCB_turma.getSelectedItem().toString();
 
         lista = sql.ConsultaCodigoTurma(nome);
 
         for (Turma b : lista) {
             int a = b.getId();
-            jtf_id_prof.setText("" + a);
-            
-            //fazer pegar o id e colocar em um arquivo com manipulação
-            //para poder mostrar apenas as provas de determinada sala
+            jtf_id_turma.setText("" + a);
         }
         Conexao.FecharConexao((com.mysql.jdbc.Connection) con);
-    }//GEN-LAST:event_jCB_discActionPerformed
+    }//GEN-LAST:event_jCB_turmaActionPerformed
 
-    private void jtf_id_profActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_id_profActionPerformed
+    private void jtf_id_turmaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_id_turmaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_id_profActionPerformed
+    }//GEN-LAST:event_jtf_id_turmaActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton5ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -366,7 +461,10 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JTextField email_prof;
     private javax.swing.JButton entrar_prof;
     private javax.swing.JButton jButton1;
-    private javax.swing.JComboBox<String> jCB_disc;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
+    private javax.swing.JComboBox<String> jCB_turma;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -385,7 +483,7 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTextField jtf_id_prof;
+    private javax.swing.JTextField jtf_id_turma;
     private javax.swing.JLabel retangulo;
     private javax.swing.JLabel retangulo_prof;
     private javax.swing.JPasswordField senha_adm;

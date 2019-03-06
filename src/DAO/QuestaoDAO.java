@@ -262,6 +262,38 @@ public class QuestaoDAO extends ExecuteSQL{
         }
     }
     
+    public List<Questao> Gerar_Questao(int id) {
+        String sql = "SELECT * FROM questoes WHERE id = "+ id +"";
+        List<Questao> lista = new ArrayList<>();
+        
+        try {
+            PreparedStatement ps = getCon().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            
+            if (rs != null) {
+                while (rs.next()) {
+                    Questao a = new Questao();
+                    a.setId(rs.getInt(1));
+                    a.setId_disc(rs.getInt(2));
+                    a.setId_assu(rs.getInt(3));
+                    a.setEnun(rs.getString(4));
+                    a.setAlt1(rs.getString(5));
+                    a.setAlt2(rs.getString(6));
+                    a.setAlt3(rs.getString(7));
+                    a.setAlt4(rs.getString(8));
+                    a.setGab(rs.getString(9));
+                    
+                    lista.add(a);
+                }
+                return lista;
+            } else {
+                return null;
+            }
+        } catch (Exception e) {
+            return null;
+        }
+    }
+    
     public List<Questao> Pesquisar_Cod_Questao_Assunto(int cod){
         String sql = "SELECT id, id_assunto, enunciado, gab "
                 + "FROM questoes WHERE id_assunto = '"+ cod +"'";
