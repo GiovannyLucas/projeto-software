@@ -263,7 +263,7 @@ public class QuestaoDAO extends ExecuteSQL{
     }
     
     public List<Questao> Gerar_Questao(int id) {
-        String sql = "SELECT * FROM questoes WHERE id = "+ id +"";
+        String sql = "SELECT * FROM questoes WHERE id = '"+ id +"'  ";
         List<Questao> lista = new ArrayList<>();
         
         try {

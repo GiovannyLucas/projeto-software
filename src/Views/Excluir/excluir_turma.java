@@ -60,8 +60,8 @@ public class excluir_turma extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         btn_cad_disc = new javax.swing.JButton();
-        jtf_id_prof = new javax.swing.JTextField();
         jCB_disc = new javax.swing.JComboBox<>();
+        jtf_id_prof = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -126,6 +126,14 @@ public class excluir_turma extends javax.swing.JFrame {
         jPanel1.add(btn_cad_disc);
         btn_cad_disc.setBounds(460, 420, 130, 50);
 
+        jCB_disc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCB_discActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jCB_disc);
+        jCB_disc.setBounds(230, 300, 350, 40);
+
         jtf_id_prof.setEditable(false);
         jtf_id_prof.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -133,15 +141,7 @@ public class excluir_turma extends javax.swing.JFrame {
             }
         });
         jPanel1.add(jtf_id_prof);
-        jtf_id_prof.setBounds(230, 300, 70, 40);
-
-        jCB_disc.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCB_discActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jCB_disc);
-        jCB_disc.setBounds(310, 300, 270, 40);
+        jtf_id_prof.setBounds(300, 300, 70, 40);
 
         jLabel14.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(255, 255, 51));

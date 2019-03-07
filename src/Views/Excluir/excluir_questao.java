@@ -39,7 +39,6 @@ public class excluir_questao extends javax.swing.JFrame {
         initComponents();
         AtualizaCombo();
         setResizable(false);
-        setLocationRelativeTo(this);
     }
     
     private void AtualizaCombo(){

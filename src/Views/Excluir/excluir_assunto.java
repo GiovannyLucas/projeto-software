@@ -39,7 +39,6 @@ public class excluir_assunto extends javax.swing.JFrame {
         initComponents();
         AtualizaCombo();
         setResizable(false);
-        setLocationRelativeTo(this);
     }
     
     private void AtualizaCombo(){

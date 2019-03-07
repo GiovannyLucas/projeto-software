@@ -187,7 +187,7 @@ public class alterar_assunto extends javax.swing.JFrame {
 
         jLabel16.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel16.setForeground(new java.awt.Color(0, 153, 0));
-        jLabel16.setText("Digite o código da questão:");
+        jLabel16.setText("Digite o código do assunto:");
         jPanel1.add(jLabel16);
         jLabel16.setBounds(300, 150, 200, 30);
 

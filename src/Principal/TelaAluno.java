@@ -174,7 +174,7 @@ public class TelaAluno extends javax.swing.JFrame {
             }
         });
         jPanel1.add(jCB_turma);
-        jCB_turma.setBounds(60, 190, 250, 40);
+        jCB_turma.setBounds(70, 190, 250, 40);
 
         jtf_id_turma.setEditable(false);
         jtf_id_turma.addActionListener(new java.awt.event.ActionListener() {
@@ -270,22 +270,8 @@ public class TelaAluno extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        String home = System.getProperty("user.home");    
-        File arquivo = new File(home + "/arqs/turma.txt");
-
-            try {
-
-            boolean a = arquivo.delete();
-                if (a) {
-                    JOptionPane.showMessageDialog(null, "Apagado");
-                } else {
-                    JOptionPane.showMessageDialog(null, "Erro");
-                }
-
-            } catch (HeadlessException e) {
-                JOptionPane.showMessageDialog(null, "Erro");
-            }
-            
+        dispose();
+        new Login().setVisible(true);
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jCB_turmaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCB_turmaActionPerformed
@@ -319,7 +305,7 @@ public class TelaAluno extends javax.swing.JFrame {
     lista = sql.Gerar_Questao(id_pro);
 
     for (Questao b : lista) {     
-            File arquivo = new File(home + "/Document/questao"+ b.getId() +".txt");
+            File arquivo = new File(home + "/Documents/questao"+ b.getId() +".txt");
 
             try {
                 arquivo.createNewFile();
@@ -339,7 +325,7 @@ public class TelaAluno extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Questão na pasta (Documentos) do seu computador", 
                                             "Banco de questões", JOptionPane.INFORMATION_MESSAGE);
             } catch (IOException e) {
-
+                JOptionPane.showMessageDialog(null, e);
             }
     }
     Conexao.FecharConexao((com.mysql.jdbc.Connection) con);
